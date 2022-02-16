@@ -18,7 +18,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{
-        R.string.tab_text_1, R.string.tab_text_2
+        R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3
     };
     private final Context mContext;
 
@@ -42,7 +42,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
-        return 2;
+        // Show the total of pages
+        return TAB_TITLES.length;
     }
 }
