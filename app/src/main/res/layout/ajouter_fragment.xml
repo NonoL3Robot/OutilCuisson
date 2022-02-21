@@ -25,7 +25,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:maxLength="20"
-                android:layout_column="1"/>
+                android:layout_span="2"/>
     </TableRow>
 
     <!-- Durée de cuisson -->
@@ -51,7 +51,7 @@
                 android:id="@+id/input_temperature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_column="1"
+                android:layout_column="3"
                 android:inputType="number" />
 
     </TableRow>
