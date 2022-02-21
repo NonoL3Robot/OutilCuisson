@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="1">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="1">
 
     <!-- Titre -->
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/ajouter_titre"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/ajouter_titre" />
 
     <TableRow> <!-- Plat -->
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_plat" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_plat" />
 
         <EditText
-                android:id="@+id/input_plat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="1"
-                android:maxLength="20"
-                android:layout_span="2"/>
+            android:id="@+id/input_plat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:inputType="text"
+            android:maxLength="20"
+            android:maxLines="1" />
     </TableRow>
 
     <!-- Durée de cuisson -->
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_duree" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_duree" />
 
     <TimePicker
-            android:id="@+id/input_duree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:timePickerMode="spinner" />
+        android:id="@+id/input_duree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner" />
 
     <TableRow> <!-- Température -->
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_temperature" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_temperature" />
 
         <EditText
-                android:id="@+id/input_temperature"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_column="3"
-                android:inputType="number" />
+            android:id="@+id/input_temperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:inputType="number"/>
 
     </TableRow>
 
     <TableRow> <!-- Buttons -->
 
         <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_effacer"
-                android:layout_column="2"
-                android:onClick="actionBtnEffacer"
-                style="?android:attr/buttonBarButtonStyle" />
+            android:id="@+id/btn_effacer"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:text="@string/btn_effacer"/>
 
         <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_valider"
-                android:onClick="actionBtnAjouter" />
+            android:id="@+id/btn_valider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_valider" />
 
     </TableRow>
 
