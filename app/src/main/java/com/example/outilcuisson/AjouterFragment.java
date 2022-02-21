@@ -36,7 +36,12 @@ public class AjouterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.ajouter_fragment, container, false);
+        View view = inflater.inflate(R.layout.ajouter_fragment, container, false);
+
+        inputDuree = view.findViewById(R.id.input_duree);
+        inputDuree.setIs24HourView(true);
+
+        return view;
     }
 
     public void actionBtnEffacer(View view) {
