@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
         ViewPager2 gestionnairePagination = findViewById(R.id.activity_main_viewpager);
         TabLayout gestionnaireOnglet = findViewById(R.id.tab_layout);
 
-
         gestionnairePagination.setAdapter(new AdaptateurPage(this));
 
         String[] titreOnglet = {
