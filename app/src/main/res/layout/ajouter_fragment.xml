@@ -1,6 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+    android:stretchColumns="0">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TableRow> <!-- Titre -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/ajouter_titre"
+            android:layout_span="3"/>
+    </TableRow>
+
+    <TableRow> <!-- Plat -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_plat"/>
+
+        <EditText
+            android:id="@+id/input_plat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow> <!-- Durée de cuisson -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_duree"/>
+
+        <TimePicker
+            android:id="@+id/input_duree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner"/>
+    </TableRow>
+
+    <TableRow> <!-- Température -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_temperature"/>
+
+        <EditText
+            android:id="@+id/input_temperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:inputType="number"/>
+
+    </TableRow>
+
+    <TableRow> <!-- Buttons -->
+
+        <Button
+            android:layout_column="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_effacer"
+            android:onClick="actionBtnEffacer"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_valider"
+            android:onClick="actionBtnAjouter"/>
+
+    </TableRow>
+
+
+
+</TableLayout>

@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">OutilCuisson</string>
+
+    <!-- Tabs -->
+    <string name="tab_afficher">Afficher</string>
+    <string name="tab_ajouter">Ajouter</string>
+
+    <!-- Section Afficher -->
+
+
+    <!-- Section Ajouter -->
+    <string name="ajouter_titre">Description cuisson d\'un plat</string>
+    <string name="label_plat">Plat</string>
+    <string name="label_duree">Durée de la cuisson</string>
+    <string name="label_temperature">Température</string>
+    <string name="btn_effacer">Effacer</string>
+    <string name="btn_valider">Valider</string>
+    
 </resources>

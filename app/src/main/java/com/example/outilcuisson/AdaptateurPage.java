@@ -6,7 +6,33 @@
 
 package com.example.outilcuisson;
 
-/**
- * TODO class comment
- */
-public class AdaptateurPage {}
+import androidx.fragment.app.Fragment;
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+public class AdaptateurPage extends FragmentStateAdapter {
+
+    private static final int NB_FRAGMENT = 2;
+
+    public AdaptateurPage(FragmentActivity activite) {
+        super(activite);
+    }
+
+    @Override
+    public Fragment createFragment(int position) {
+        switch (position) {
+            case 0:
+                return AfficherFragment.newInstance();
+            case 1:
+                return AjouterFragment.newInstance();
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return NB_FRAGMENT;
+    }
+}
