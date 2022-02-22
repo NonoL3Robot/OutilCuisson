@@ -1,9 +1,13 @@
 package com.example.outilcuisson;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -28,5 +32,28 @@ public class MainActivity extends AppCompatActivity {
         new TabLayoutMediator(gestionnaireOnglet, gestionnairePagination,
                 (tab, position) -> tab.setText(titreOnglet[position])
         ).attach();
+    }
+
+    /* Crée le menu d'options en le désérialisant à partir du fichier
+     * menu_options.xml
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        new MenuInflater(this).inflate(R.menu.menu_options, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /* Réalise l'action souhaité en fonction de l'item du menu selectionné */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.aideOptions:
+                // TODO
+                break;
+            case R.id.reinitOptions:
+                // TODO
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
