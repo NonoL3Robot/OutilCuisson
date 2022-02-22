@@ -1,19 +1,34 @@
 <resources>
     <string name="app_name">OutilCuisson</string>
 
+    <!-- Menu d'options -->
+    <string name="option_aide">"Aide"</string>
+    <string name="option_reinit">"Réinitialiser"</string>
+    <string name="popup_reinit">"Etes vous sûr de vouloir réinitialiser
+        l'application ? Tous les temps de cuisson préalablement
+        rentrés seront supprimés"</string>
+
+    <!-- Menu contextuel -->
+    <string name="context_suppr">"Supprimer"</string>
+    <string name="context_thermos">"Voir thermostat"</string>
+    <string name="context_cancel">"Annuler"</string>
+
     <!-- Tabs -->
-    <string name="tab_afficher">Afficher</string>
-    <string name="tab_ajouter">Ajouter</string>
+    <string name="tab_afficher">"Afficher"</string>
+    <string name="tab_ajouter">"Ajouter"</string>
 
     <!-- Section Afficher -->
-
+    <string name="afficher_titre">"Temps de cuisson"</string>
+    <string name="afficher_label_plat">"Plat"</string>
+    <string name="afficher_label_duree">"Durée"</string>
+    <string name="afficher_label_temperature">"Degrés"</string>
 
     <!-- Section Ajouter -->
-    <string name="ajouter_titre">Description cuisson d\'un plat</string>
-    <string name="label_plat">Plat</string>
-    <string name="label_duree">Durée de la cuisson</string>
-    <string name="label_temperature">Température</string>
-    <string name="btn_effacer">Effacer</string>
-    <string name="btn_valider">Valider</string>
+    <string name="ajouter_titre">"Description cuisson d'un plat"</string>
+    <string name="ajouter_label_plat">"Plat"</string>
+    <string name="ajouter_label_duree">"Durée de la cuisson"</string>
+    <string name="ajouter_label_temperature">"Température"</string>
+    <string name="btn_effacer">"Effacer"</string>
+    <string name="btn_valider">"Valider"</string>
     
 </resources>
