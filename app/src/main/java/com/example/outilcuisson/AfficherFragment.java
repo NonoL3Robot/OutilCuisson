@@ -7,10 +7,16 @@
 package com.example.outilcuisson;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
@@ -20,7 +26,9 @@ public class AfficherFragment extends Fragment {
     /**
      * Liste des cuissons enregistré dans l'application
      */
-    public static ArrayList<Cuisson> listeCuisson = new ArrayList<>();
+    public static ArrayList<Cuisson> cuissonAffichees = new ArrayList<>();
+
+    ListView listeCuisson;
 
     /**
      * Ajouter une cuisson
@@ -28,7 +36,7 @@ public class AfficherFragment extends Fragment {
      * @param cuisson La cuisson à ajouter
      */
     public static void addCuisson(Cuisson cuisson) {
-        listeCuisson.add(cuisson);
+        cuissonAffichees.add(cuisson);
         updateSaveFile();
     }
 
@@ -87,8 +95,41 @@ public class AfficherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.afficher_fragment, container, false);
         loadSaveFile();
-        return inflater.inflate(R.layout.afficher_fragment, container, false);
+        listeCuisson = view.findViewById(R.id.listeCuisson);
+        registerForContextMenu(listeCuisson);
+        return view;
     }
 
+    /* Crée le menu contextuel en le désérialisant à partir du fichier
+     * menu_contextuel.xml
+     */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu,
+                                    View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        // pas sûr du super.getContext() (Noé)
+        new MenuInflater(super.getContext()).inflate(R.menu.menu_contextuel, menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    /* Réalise l'action souhaité en fonction de l'item du menu selectionné */
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo information
+            = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        switch (item.getItemId()) {
+            case R.id.supprContext:
+                // TODO
+                break;
+            case R.id.thermosContext:
+                // TODO
+                break;
+            case R.id.cancelContext:
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
 }
