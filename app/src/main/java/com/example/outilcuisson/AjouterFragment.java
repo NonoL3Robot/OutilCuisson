@@ -95,5 +95,4 @@ public class AjouterFragment extends Fragment {
 
         return view;
     }
-
 }
