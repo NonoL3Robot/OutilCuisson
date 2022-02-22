@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_plat" />
+            android:text="@string/ajouter_label_plat" />
 
         <EditText
             android:id="@+id/input_plat"
@@ -32,7 +32,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/label_duree" />
+        android:text="@string/ajouter_label_duree" />
 
     <TimePicker
         android:id="@+id/input_duree"
@@ -45,7 +45,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_temperature" />
+            android:text="@string/ajouter_label_temperature" />
 
         <EditText
             android:id="@+id/input_temperature"
