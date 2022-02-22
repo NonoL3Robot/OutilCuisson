@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/supprContext"
+            android:title="@string/context_suppr"/>
+    <item
+            android:id="@+id/thermosContext"
+            android:title="@string/context_thermos"/>
+    <item
+            android:id="@+id/cancelContext"
+            android:title="@string/context_cancel"/>
+</menu>
