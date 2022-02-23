@@ -16,7 +16,8 @@ import android.widget.TimePicker;
 
 import androidx.fragment.app.Fragment;
 
-import com.exercice.onglet.outilcuisson2021.OutilCuisson;
+import com.example.outilcuisson.OutilCuisson;
+import com.example.outilcuisson.Cuisson;
 
 public class AjouterFragment extends Fragment {
 

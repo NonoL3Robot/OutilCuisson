@@ -14,11 +14,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class AfficherFragment extends Fragment {
@@ -26,9 +35,13 @@ public class AfficherFragment extends Fragment {
     /**
      * Liste des cuissons enregistré dans l'application
      */
-    public static ArrayList<Cuisson> cuissonAffichees = new ArrayList<>();
+    public static ArrayList<com.example.outilcuisson.Cuisson> cuissonAffichees = new ArrayList<>();
 
-    ListView listeCuisson;
+    static View listeCuisson1;
+    static ArrayList listeCuisson;
+
+    private ArrayAdapter<String> adaptateur;
+    private ArrayList<String> cuissonAAfficher;
 
     /**
      * Ajouter une cuisson
@@ -46,15 +59,20 @@ public class AfficherFragment extends Fragment {
     private static void updateSaveFile() {
         // TODO Il faut creer un fichier cuisson.txt si il n'existe pas
 
-//        try {
-//            FileOutputStream fos = new FileOutputStream("dataCuisson.txt", false);
-//            ObjectOutputStream oos = new ObjectOutputStream(fos);
-//            oos.writeObject(listeCuisson);
-//            oos.close();
-//            fos.close();
-//        } catch (IOException ioe) {
-//            ioe.printStackTrace();
-//        }
+        File file;
+        FileOutputStream fos = null;
+      try {
+            file = new File("dataCuisson.txt");
+            fos = new FileOutputStream(file);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(listeCuisson1);
+          oos.close(); fos.close();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
     /**
@@ -63,21 +81,20 @@ public class AfficherFragment extends Fragment {
     private static void loadSaveFile() {
         // TODO à décommenter lorsque updateSaveFile() sera terminé
 
-//        try {
-//            FileInputStream fis = new FileInputStream("dataCuisson.txt");
-//            ObjectInputStream ois = new ObjectInputStream(fis);
-//
-//            listeCuisson = (ArrayList) ois.readObject();
-//
-//            ois.close();
-//            fis.close();
-//        } catch (FileNotFoundException ignored) {
-//        } catch (IOException ioe) {
-//            ioe.printStackTrace();
-//        } catch (ClassNotFoundException c) {
-//            System.out.println("Class not found");
-//            c.printStackTrace();
-//        }
+        try {
+            FileInputStream fis = new FileInputStream("dataCuisson.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+           listeCuisson = (ArrayList) ois.readObject();
+           ois.close();
+            fis.close();
+        } catch (FileNotFoundException ignored) {
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            System.out.println("Class not found");
+            c.printStackTrace();
+        }
     }
 
     public AfficherFragment() {
@@ -97,8 +114,8 @@ public class AfficherFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.afficher_fragment, container, false);
         loadSaveFile();
-        listeCuisson = view.findViewById(R.id.listeCuisson);
-        registerForContextMenu(listeCuisson);
+        listeCuisson1 = view.findViewById(R.id.listeCuisson);
+        registerForContextMenu(listeCuisson1);
         return view;
     }
 

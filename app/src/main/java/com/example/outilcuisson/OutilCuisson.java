@@ -17,7 +17,7 @@
 /*  A priori de fichier ne doit pas être modifié. Vous restez libre de le modifier si
     besoin
  */
-package com.exercice.onglet.outilcuisson2021;
+package com.example.outilcuisson;
 
 
 /**
