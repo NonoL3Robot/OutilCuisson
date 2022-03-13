@@ -33,9 +33,15 @@ import java.util.ArrayList;
 public class AfficherFragment extends Fragment {
 
     /**
+     * Le nom du fichier de sauvegarde
+     */
+    public static final String FICHIER_SAUVEGARDE = "cuisson.save";
+
+    /**
      * Liste des cuissons enregistré dans l'application
      */
-    public static ArrayList<com.example.outilcuisson.Cuisson> cuissonAffichees = new ArrayList<>();
+    public static ArrayList<com.example.outilcuisson.Cuisson> cuissonAffichees
+        = new ArrayList<>();
 
     static View listeCuisson1;
     static ArrayList listeCuisson;
@@ -54,24 +60,21 @@ public class AfficherFragment extends Fragment {
     }
 
     /**
-     * Met a jour le fichier dataCuisson.txt qui sauvegarde la liste des cuissons
+     * Met a jour le fichier dataCuisson.txt qui sauvegarde la liste des
+     * cuissons
      */
     private static void updateSaveFile() {
-        // TODO Il faut creer un fichier cuisson.txt si il n'existe pas
-
-        File file;
-        FileOutputStream fos = null;
-      try {
-            file = new File("dataCuisson.txt");
-            fos = new FileOutputStream(file);
-            if(!file.exists()){
-                file.createNewFile();
-            }
+        try {
+            FileOutputStream fos = new FileOutputStream(FICHIER_SAUVEGARDE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(listeCuisson1);
-          oos.close(); fos.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+
+            oos.writeObject(listeCuisson);
+
+            oos.close();
+            fos.close();
+            System.out.println("Sauvegardé avec succès");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -79,16 +82,15 @@ public class AfficherFragment extends Fragment {
      * Charge la liste des cuissons contenue dans le fichier dataCuisson.txt
      */
     private static void loadSaveFile() {
-        // TODO à décommenter lorsque updateSaveFile() sera terminé
-
         try {
-            FileInputStream fis = new FileInputStream("dataCuisson.txt");
+            FileInputStream fis = new FileInputStream(FICHIER_SAUVEGARDE);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-           listeCuisson = (ArrayList) ois.readObject();
-           ois.close();
+            listeCuisson = (ArrayList) ois.readObject();
+
+            ois.close();
             fis.close();
-        } catch (FileNotFoundException ignored) {
+            System.out.println("Chargement des données avec succès");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } catch (ClassNotFoundException c) {
@@ -110,16 +112,19 @@ public class AfficherFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.afficher_fragment, container, false);
+        View view = inflater.inflate(R.layout.afficher_fragment, container,
+                                     false);
         loadSaveFile();
         listeCuisson1 = view.findViewById(R.id.listeCuisson);
         registerForContextMenu(listeCuisson1);
         return view;
     }
 
-    /* Crée le menu contextuel en le désérialisant à partir du fichier
+    /**
+     * Crée le menu contextuel en le désérialisant à partir du fichier
      * menu_contextuel.xml
      */
     @Override
@@ -127,11 +132,14 @@ public class AfficherFragment extends Fragment {
                                     View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         // pas sûr du super.getContext() (Noé)
-        new MenuInflater(super.getContext()).inflate(R.menu.menu_contextuel, menu);
+        new MenuInflater(super.getContext()).inflate(R.menu.menu_contextuel,
+                                                     menu);
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
-    /* Réalise l'action souhaité en fonction de l'item du menu selectionné */
+    /**
+     * Réalise l'action souhaité en fonction de l'item du menu selectionné
+     */
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo information
