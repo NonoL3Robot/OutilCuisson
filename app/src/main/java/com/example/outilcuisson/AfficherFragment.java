@@ -21,9 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -33,71 +31,26 @@ import java.util.ArrayList;
 public class AfficherFragment extends Fragment {
 
     /**
+     * TODO
+     */
+    public ListView listeCuissons;
+
+    /**
+     * TODO
+     */
+    public ArrayAdapter<Cuisson> adapterCuissons;
+
+
+    /**
+     * Liste des cuissons enregistrées dans l'application
+     */
+    public static ArrayList<Cuisson> cuissonAffichees;
+
+    /**
      * Le nom du fichier de sauvegarde
      */
     public static final String FICHIER_SAUVEGARDE = "cuisson.save";
 
-    /**
-     * Liste des cuissons enregistré dans l'application
-     */
-    public static ArrayList<com.example.outilcuisson.Cuisson> cuissonAffichees
-        = new ArrayList<>();
-
-    static View listeCuisson1;
-    static ArrayList listeCuisson;
-
-    private ArrayAdapter<String> adaptateur;
-    private ArrayList<String> cuissonAAfficher;
-
-    /**
-     * Ajouter une cuisson
-     *
-     * @param cuisson La cuisson à ajouter
-     */
-    public static void addCuisson(Cuisson cuisson) {
-        cuissonAffichees.add(cuisson);
-        updateSaveFile();
-    }
-
-    /**
-     * Met a jour le fichier dataCuisson.txt qui sauvegarde la liste des
-     * cuissons
-     */
-    private static void updateSaveFile() {
-        try {
-            FileOutputStream fos = new FileOutputStream(FICHIER_SAUVEGARDE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            oos.writeObject(listeCuisson);
-
-            oos.close();
-            fos.close();
-            System.out.println("Sauvegardé avec succès");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Charge la liste des cuissons contenue dans le fichier dataCuisson.txt
-     */
-    private static void loadSaveFile() {
-        try {
-            FileInputStream fis = new FileInputStream(FICHIER_SAUVEGARDE);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
-            listeCuisson = (ArrayList) ois.readObject();
-
-            ois.close();
-            fis.close();
-            System.out.println("Chargement des données avec succès");
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } catch (ClassNotFoundException c) {
-            System.out.println("Class not found");
-            c.printStackTrace();
-        }
-    }
 
     public AfficherFragment() {
     }
@@ -117,10 +70,68 @@ public class AfficherFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.afficher_fragment, container,
                                      false);
-        loadSaveFile();
-        listeCuisson1 = view.findViewById(R.id.listeCuisson);
-        registerForContextMenu(listeCuisson1);
+        cuissonAffichees = new ArrayList<>();
+        listeCuissons = view.findViewById(R.id.listeCuisson);
+        adapterCuissons = new ArrayAdapter<Cuisson>(getActivity(),
+            android.R.layout.simple_list_item_1, cuissonAffichees);
+        listeCuissons.setAdapter(adapterCuissons);
+        registerForContextMenu(listeCuissons);
+
+//        cuissonAffichees.add(new Cuisson("test", 0, 40, 180));
+        adapterCuissons.notifyDataSetChanged();
+        listeCuissons.requestLayout();
+
         return view;
+    }
+
+    /**
+     * Ajouter une cuisson
+     *
+     * @param cuisson La cuisson à ajouter
+     */
+    public static void addCuisson(Cuisson cuisson) {
+        cuissonAffichees.add(cuisson);
+        System.out.println(cuissonAffichees);
+    }
+
+    /**
+     * Met a jour le fichier dataCuisson.txt qui sauvegarde la liste des
+     * cuissons
+     */
+    private static void updateSaveFile() {
+        try {
+            FileOutputStream fos = new FileOutputStream(FICHIER_SAUVEGARDE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(cuissonAffichees);
+
+            oos.close();
+            fos.close();
+            System.out.println("Sauvegardé avec succès");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Charge la liste des cuissons contenue dans le fichier dataCuisson.txt
+     */
+    private static void loadSaveFile() {
+        try {
+            FileInputStream fis = new FileInputStream(FICHIER_SAUVEGARDE);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            cuissonAffichees = (ArrayList) ois.readObject();
+
+            ois.close();
+            fis.close();
+            System.out.println("Chargement des données avec succès");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            System.out.println("Class not found");
+            c.printStackTrace();
+        }
     }
 
     /**
