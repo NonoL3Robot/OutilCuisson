@@ -107,7 +107,7 @@ public class AjouterFragment extends Fragment {
                     new Cuisson(txtPlat, hDuree, mDuree, temperature));
                 Toast.makeText(getContext(), R.string.toast_ajout_ok, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
-                new AlertDialog.Builder(getContext()).setTitle("Erreur")
+                new AlertDialog.Builder(getContext()).setTitle(R.string.alert_error)
                                                      .setMessage(e.getMessage())
                                                      .setPositiveButton(
                                                          R.string.alert_positive_button,

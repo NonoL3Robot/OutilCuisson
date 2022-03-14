@@ -15,6 +15,7 @@
 
     <!-- AlertDialog Erreur Ajout -->
     <string name="alert_positive_button">"OK"</string>
+    <string name="alert_error">"Erreur"</string>
 
     <!-- Toast Ajout OK -->
     <string name="toast_ajout_ok">"Cuisson ajoutée avec succès"</string>
