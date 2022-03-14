@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -104,13 +105,14 @@ public class AjouterFragment extends Fragment {
             try {
                 activiteQuiMEcoute.recevoirCuisson(
                     new Cuisson(txtPlat, hDuree, mDuree, temperature));
+                Toast.makeText(getContext(), R.string.toast_ajout_ok, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 new AlertDialog.Builder(getContext()).setTitle("Erreur")
                                                      .setMessage(e.getMessage())
                                                      .setPositiveButton(
-                                                         R.string.btn_valider,
+                                                         R.string.alert_positive_button,
                                                          null)
-                                                     .show(); // TODO modif
+                                                     .show();
                 System.out.println(e.getMessage());
             }
         });

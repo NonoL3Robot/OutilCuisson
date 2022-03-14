@@ -13,6 +13,12 @@
     <string name="context_thermos">"Voir thermostat"</string>
     <string name="context_cancel">"Annuler"</string>
 
+    <!-- AlertDialog Erreur Ajout -->
+    <string name="alert_positive_button">"OK"</string>
+
+    <!-- Toast Ajout OK -->
+    <string name="toast_ajout_ok">"Cuisson ajoutée avec succès"</string>
+
     <!-- Tabs -->
     <string name="tab_afficher">"Afficher"</string>
     <string name="tab_ajouter">"Ajouter"</string>
