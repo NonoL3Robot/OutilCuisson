@@ -181,7 +181,7 @@ public class Cuisson implements Serializable {
     }
 
     /**
-     * Renvoie le thermostat correspondant à la temperature arguemnt
+     * Renvoie le thermostat correspondant à la temperature argument
      * (celle-ci doit être inférieure à TEMPERATURE_MAX)
      *
      * @param temperature température à convertir

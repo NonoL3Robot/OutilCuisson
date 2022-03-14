@@ -6,6 +6,7 @@
 
 package com.example.outilcuisson;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -156,13 +157,27 @@ public class AfficherFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.supprContext:
                 // TODO
+//                cuissonAffichees.remove(information.position);
                 break;
             case R.id.thermosContext:
-                // TODO
+                afficherThermos(cuissonAffichees.get(information.position));
                 break;
             case R.id.cancelContext:
                 break;
         }
         return super.onContextItemSelected(item);
+    }
+
+    public void afficherThermos(String cuisson) {
+        String content = getString(R.string.alert_content_thermos,
+                                   Cuisson.extrairePlat(cuisson),
+                                   Cuisson.extraireTemperature(cuisson),
+                                   Cuisson.thermostat(Cuisson.extraireTemperature(cuisson)));
+        new AlertDialog.Builder(getContext()).setTitle(R.string.alert_title_thermos)
+                                             .setMessage(content)
+                                             .setNeutralButton(
+                                                 R.string.alert_neutral_button,
+                                                 null)
+                                             .show();
     }
 }

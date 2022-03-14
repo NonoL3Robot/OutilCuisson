@@ -13,11 +13,24 @@
     <string name="context_thermos">"Voir thermostat"</string>
     <string name="context_cancel">"Annuler"</string>
 
-    <!-- AlertDialog Erreur Ajout -->
-    <string name="alert_positive_button">"OK"</string>
-    <string name="alert_error">"Erreur"</string>
+    <!-- AlertDialog -->
+    <string name="alert_title_error">"Erreur de saisie"</string>
+    <string name="alert_content_error">L\'une des informations saisies est
+        incorrecte :
+        \n- nom du plat vide ou contient \"|\"
+        \n- durée de cuisson nulle ou trop élevée (> 9h)
+        \n- température nulle ou trop élevée \n(> 300°C)
+        \n\n
+        Vérifiez les valeurs saisies !</string>
+    <string name="alert_neutral_button">"Retour"</string>
 
-    <!-- Toast Ajout OK -->
+    <string name="alert_title_thermos">"Equivalent thermostat"</string>
+    <string name="alert_content_thermos">Cuisson du plat : %s
+        \n\nPour obtenir la température de %d°, vous devez régler votre
+    four sur le thermostat %d</string>
+
+
+    <!-- Toast -->
     <string name="toast_ajout_ok">"Cuisson ajoutée avec succès"</string>
 
     <!-- Tabs -->
