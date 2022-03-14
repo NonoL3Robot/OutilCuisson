@@ -77,10 +77,6 @@ public class AfficherFragment extends Fragment {
         listeCuissons.setAdapter(adapterCuissons);
         registerForContextMenu(listeCuissons);
 
-//        cuissonAffichees.add(new Cuisson("test", 0, 40, 180));
-        adapterCuissons.notifyDataSetChanged();
-        listeCuissons.requestLayout();
-
         return view;
     }
 
@@ -89,9 +85,10 @@ public class AfficherFragment extends Fragment {
      *
      * @param cuisson La cuisson à ajouter
      */
-    public static void addCuisson(Cuisson cuisson) {
-        cuissonAffichees.add(cuisson.toString());
-        System.out.println(cuissonAffichees);
+    public void addCuisson(Cuisson cuisson) {
+        adapterCuissons.add(cuisson.toString());
+        adapterCuissons.notifyDataSetChanged();
+        listeCuissons.requestLayout();
     }
 
     /**

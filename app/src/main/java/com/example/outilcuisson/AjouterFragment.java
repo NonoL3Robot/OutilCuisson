@@ -6,6 +6,7 @@
 
 package com.example.outilcuisson;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.outilcuisson.OutilCuisson;
@@ -34,15 +36,30 @@ public class AjouterFragment extends Fragment {
         return new AjouterFragment();
     }
 
+    public interface EcouteurAjout {
+        void recevoirCuisson(Cuisson cuisson);
+    }
+
+    private EcouteurAjout activiteQuiMEcoute;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        activiteQuiMEcoute = (EcouteurAjout) context;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.ajouter_fragment, container, false);
+        View view = inflater.inflate(R.layout.ajouter_fragment, container,
+                                     false);
 
         /* Liste des éléments intéractifs */
         inputPlat = view.findViewById(R.id.input_plat);
@@ -51,7 +68,8 @@ public class AjouterFragment extends Fragment {
         btnEffacer = view.findViewById(R.id.btn_effacer);
         btnValider = view.findViewById(R.id.btn_valider);
 
-        /* Initialise le TimePicker en format 24h avec par défaut la valeur 0h40 */
+        /* Initialise le TimePicker en format 24h avec par défaut la valeur
+        0h40 */
         inputDuree.setIs24HourView(true);
         inputDuree.setHour(0);
         inputDuree.setMinute(40);
@@ -67,20 +85,23 @@ public class AjouterFragment extends Fragment {
             int mDuree = inputDuree.getMinute();
 
             /* Convertis la température en entier */
-            int temperature = txtTemperature.isEmpty() ? -1 : Integer.parseInt(txtTemperature);
+            int temperature = txtTemperature.isEmpty() ? -1 : Integer.parseInt(
+                txtTemperature);
 
             /* Cas ou les valeurs ne sont pas valides */
             if (!OutilCuisson.platValide(txtPlat)
-                    || !OutilCuisson.heureCuissonValide(hDuree)
-                    || !OutilCuisson.minuteCuissonValide(mDuree)
-                    || !OutilCuisson.temperatureValide(temperature)) {
+                || !OutilCuisson.heureCuissonValide(hDuree)
+                || !OutilCuisson.minuteCuissonValide(mDuree)
+                || !OutilCuisson.temperatureValide(temperature)) {
 
                 System.out.println("Erreur");
 
             }
 
-            /* Cas ou les valeurs sont valides : on ajoute une nouvelle cuisson dans la liste a afficher */
-            AfficherFragment.addCuisson(new Cuisson(txtPlat, hDuree, mDuree, temperature));
+            /* Cas ou les valeurs sont valides : on ajoute une nouvelle
+            cuisson dans la liste a afficher */
+            activiteQuiMEcoute.recevoirCuisson(
+                new Cuisson(txtPlat, hDuree, mDuree, temperature));
         });
 
         /*

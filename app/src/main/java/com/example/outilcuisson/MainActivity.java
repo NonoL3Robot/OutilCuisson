@@ -12,7 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AjouterFragment.EcouteurAjout {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,5 +55,16 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void recevoirCuisson(Cuisson cuisson) {
+        AfficherFragment fragmentAModifier =
+            (AfficherFragment) getSupportFragmentManager().findFragmentByTag(
+                "f0");
+
+        if (fragmentAModifier != null) {
+            fragmentAModifier.addCuisson(cuisson);
+        }
     }
 }
