@@ -31,7 +31,8 @@
 
 
     <!-- Toast -->
-    <string name="toast_ajout_ok">"Cuisson ajoutée avec succès"</string>
+    <string name="toast_ajout_ok">Le plat %s a bien été ajouté à la
+        liste</string>
 
     <!-- Tabs -->
     <string name="tab_afficher">"Afficher"</string>
@@ -50,5 +51,5 @@
     <string name="ajouter_label_temperature">"Température"</string>
     <string name="btn_effacer">"Effacer"</string>
     <string name="btn_valider">"Valider"</string>
-    
+
 </resources>

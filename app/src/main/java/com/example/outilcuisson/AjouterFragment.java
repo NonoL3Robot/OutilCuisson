@@ -103,12 +103,18 @@ public class AjouterFragment extends Fragment {
             /* Cas ou les valeurs sont valides : on ajoute une nouvelle
             cuisson dans la liste a afficher */
             try {
-                activiteQuiMEcoute.recevoirCuisson(
-                    new Cuisson(txtPlat, hDuree, mDuree, temperature));
-                Toast.makeText(getContext(), R.string.toast_ajout_ok, Toast.LENGTH_SHORT).show();
+                Cuisson cuisson = new Cuisson(txtPlat, hDuree, mDuree,
+                                              temperature);
+                activiteQuiMEcoute.recevoirCuisson(cuisson);
+                String content = getString(R.string.toast_ajout_ok,
+                                           cuisson.getPlat());
+                Toast.makeText(getContext(), content, Toast.LENGTH_SHORT)
+                     .show();
             } catch (Exception e) {
-                new AlertDialog.Builder(getContext()).setTitle(R.string.alert_title_error)
-                                                     .setMessage(R.string.alert_content_error)
+                new AlertDialog.Builder(getContext()).setTitle(
+                    R.string.alert_title_error)
+                                                     .setMessage(
+                                                         R.string.alert_content_error)
                                                      .setNeutralButton(
                                                          R.string.alert_neutral_button,
                                                          null)
