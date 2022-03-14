@@ -31,7 +31,12 @@ public class Cuisson implements Serializable {
     private int minute;
     private int degree;
 
-    public Cuisson(String plat, int heure, int minute, int degree) {
+    public Cuisson(String plat, int heure, int minute, int degree) throws
+                                                                   Exception {
+        if (!platValide(plat) || !heureCuissonValide(heure)
+            || !minuteCuissonValide(minute) || !temperatureValide(degree)) {
+            throw new Exception(CHAINE_DEFAUT);
+        }
         this.plat = plat;
         this.heure = heure;
         this.minute = minute;
@@ -105,36 +110,31 @@ public class Cuisson implements Serializable {
     public String toString() {
         StringBuilder aRenvoyer = new StringBuilder();
 
-        if (platValide(this.plat) && heureCuissonValide(this.heure)
-            && minuteCuissonValide(this.minute) && temperatureValide(this.degree)) {
 
-            // on insère le nom du plat
-            aRenvoyer.append(plat);
-            aRenvoyer.append(chaineEspace(LG_MAX_PLAT - plat.length()));
-            aRenvoyer.append(" | ");
+        // on insère le nom du plat
+        aRenvoyer.append(plat);
+        aRenvoyer.append(chaineEspace(LG_MAX_PLAT - plat.length()));
+        aRenvoyer.append(" | ");
 
-            // on insère la durée
-            aRenvoyer.append(String.valueOf(heure));
-            aRenvoyer.append(" h ");
-            if (minute < 10) {
-                aRenvoyer.append("0");
-            }
-            aRenvoyer.append(String.valueOf(minute));
-            aRenvoyer.append(" | ");
-
-            // on insère la température
-            aRenvoyer.append(String.format("%3d", degree));
-        } else {
-
-            // l'un des arguments est invalide
-            aRenvoyer.append(CHAINE_DEFAUT);
+        // on insère la durée
+        aRenvoyer.append(String.valueOf(heure));
+        aRenvoyer.append(" h ");
+        if (minute < 10) {
+            aRenvoyer.append("0");
         }
+        aRenvoyer.append(String.valueOf(minute));
+        aRenvoyer.append(" | ");
+
+        // on insère la température
+        aRenvoyer.append(String.format("%3d", degree));
         return aRenvoyer.toString();
     }
 
     /**
-     * Extrait d'une chaîne le nom du plat. On suppose que la chaîne est correctement
-     * formatée dans le format de la description d'une cuisson gérée par cette classe
+     * Extrait d'une chaîne le nom du plat. On suppose que la chaîne est
+     * correctement
+     * formatée dans le format de la description d'une cuisson gérée par
+     * cette classe
      * (les 20 premiers caractères de la chaîne sont extraits)
      *
      * @param source chaîne source de l'extraction
@@ -161,11 +161,13 @@ public class Cuisson implements Serializable {
      */
     public static int extraireTemperature(String source) {
         int temperature;                // température extraite
-        String chaineTemperature;       // température extraite en tant que chaîne
+        String
+            chaineTemperature;       // température extraite en tant que chaîne
 
 
         try {
-            chaineTemperature = source.substring(source.length() - 3, source.length());
+            chaineTemperature = source.substring(source.length() - 3,
+                                                 source.length());
             temperature = Integer.parseInt(chaineTemperature);
         } catch (NumberFormatException | IndexOutOfBoundsException erreur) {
 

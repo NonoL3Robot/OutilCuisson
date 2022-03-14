@@ -6,6 +6,7 @@
 
 package com.example.outilcuisson;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -100,8 +101,18 @@ public class AjouterFragment extends Fragment {
 
             /* Cas ou les valeurs sont valides : on ajoute une nouvelle
             cuisson dans la liste a afficher */
-            activiteQuiMEcoute.recevoirCuisson(
-                new Cuisson(txtPlat, hDuree, mDuree, temperature));
+            try {
+                activiteQuiMEcoute.recevoirCuisson(
+                    new Cuisson(txtPlat, hDuree, mDuree, temperature));
+            } catch (Exception e) {
+                new AlertDialog.Builder(getContext()).setTitle("Erreur")
+                                                     .setMessage(e.getMessage())
+                                                     .setPositiveButton(
+                                                         R.string.btn_valider,
+                                                         null)
+                                                     .show(); // TODO modif
+                System.out.println(e.getMessage());
+            }
         });
 
         /*
