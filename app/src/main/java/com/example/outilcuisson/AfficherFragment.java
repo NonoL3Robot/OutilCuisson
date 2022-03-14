@@ -157,7 +157,9 @@ public class AfficherFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.supprContext:
                 // TODO
-//                cuissonAffichees.remove(information.position);
+                cuissonAffichees.remove(information.position);
+                adapterCuissons.notifyDataSetChanged();
+                listeCuissons.requestLayout();
                 break;
             case R.id.thermosContext:
                 afficherThermos(cuissonAffichees.get(information.position));
