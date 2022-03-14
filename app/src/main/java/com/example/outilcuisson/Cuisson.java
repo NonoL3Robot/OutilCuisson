@@ -101,47 +101,29 @@ public class Cuisson implements Serializable {
         return degree;
     }
 
-    /**
-     * Concatène les arguments dans une chaîne de caractères. Celle-ci aura le format
-     * suivant :
-     * nom du plat   |  temps de cuisson en heures et minutes | température
-     * Si l'un des arguments est invalide, c'est la constante CHAINE_DEFAUT qui
-     * est renvoyée
-     *
-     * @param nomPlat       nom du plat. Doit être non vide, avec au plus
-     *                      LG_MAX_PLAT caractères, ne doit pas contenir |
-     * @param heureCuisson  nombre d'heures de la durée de la cuisson
-     *                      doit être compris entre 0 et 9
-     * @param minuteCuisson nombre de minutes de la durée de la cuisson
-     *                      doit être compris entre 0 et 59
-     * @param temperature   température de la cuisson. Doit être comprise entre
-     *                      1 et TEMPERATURE_MAX
-     * @return une chaîne contenant le descriptif de la cuisson si les paramètres
-     * sont valides. Sinon la chaîne  CHAINE_DEFAUT
-     */
-    public static String transformeEnChaine(String nomPlat, int heureCuisson,
-                                            int minuteCuisson, int temperature) {
+    @Override
+    public String toString() {
         StringBuilder aRenvoyer = new StringBuilder();
 
-        if (platValide(nomPlat) && heureCuissonValide(heureCuisson)
-            && minuteCuissonValide(minuteCuisson) && temperatureValide(temperature)) {
+        if (platValide(this.plat) && heureCuissonValide(this.heure)
+            && minuteCuissonValide(this.minute) && temperatureValide(this.degree)) {
 
             // on insère le nom du plat
-            aRenvoyer.append(nomPlat);
-            aRenvoyer.append(chaineEspace(LG_MAX_PLAT - nomPlat.length()));
+            aRenvoyer.append(plat);
+            aRenvoyer.append(chaineEspace(LG_MAX_PLAT - plat.length()));
             aRenvoyer.append(" | ");
 
             // on insère la durée
-            aRenvoyer.append(String.valueOf(heureCuisson));
+            aRenvoyer.append(String.valueOf(heure));
             aRenvoyer.append(" h ");
-            if (minuteCuisson < 10) {
+            if (minute < 10) {
                 aRenvoyer.append("0");
             }
-            aRenvoyer.append(String.valueOf(minuteCuisson));
+            aRenvoyer.append(String.valueOf(minute));
             aRenvoyer.append(" | ");
 
             // on insère la température
-            aRenvoyer.append(String.format("%3d", temperature));
+            aRenvoyer.append(String.format("%3d", degree));
         } else {
 
             // l'un des arguments est invalide

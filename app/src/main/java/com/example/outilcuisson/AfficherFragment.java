@@ -38,13 +38,13 @@ public class AfficherFragment extends Fragment {
     /**
      * TODO
      */
-    public ArrayAdapter<Cuisson> adapterCuissons;
+    public ArrayAdapter<String> adapterCuissons;
 
 
     /**
      * Liste des cuissons enregistrées dans l'application
      */
-    public static ArrayList<Cuisson> cuissonAffichees;
+    public static ArrayList<String> cuissonAffichees;
 
     /**
      * Le nom du fichier de sauvegarde
@@ -72,7 +72,7 @@ public class AfficherFragment extends Fragment {
                                      false);
         cuissonAffichees = new ArrayList<>();
         listeCuissons = view.findViewById(R.id.listeCuisson);
-        adapterCuissons = new ArrayAdapter<Cuisson>(getActivity(),
+        adapterCuissons = new ArrayAdapter<String>(getActivity(),
             android.R.layout.simple_list_item_1, cuissonAffichees);
         listeCuissons.setAdapter(adapterCuissons);
         registerForContextMenu(listeCuissons);
@@ -90,7 +90,7 @@ public class AfficherFragment extends Fragment {
      * @param cuisson La cuisson à ajouter
      */
     public static void addCuisson(Cuisson cuisson) {
-        cuissonAffichees.add(cuisson);
+        cuissonAffichees.add(cuisson.toString());
         System.out.println(cuissonAffichees);
     }
 
