@@ -11,23 +11,9 @@
     android:orientation="horizontal">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/item_plat"
+        android:id="@+id/item_cuisson"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:typeface="monospace"
         android:textStyle="bold"/>
-
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/item_duree"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:typeface="monospace"
-    android:textStyle="bold"/>
-
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/item_degres"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:typeface="monospace"
-    android:textStyle="bold"/>
 </LinearLayout>
