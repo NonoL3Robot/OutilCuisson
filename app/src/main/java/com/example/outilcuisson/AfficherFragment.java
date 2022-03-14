@@ -73,7 +73,7 @@ public class AfficherFragment extends Fragment {
                                      false);
         cuissonAffichees = new ArrayList<>();
         listeCuissons = view.findViewById(R.id.listeCuisson);
-        adapterCuissons = new ArrayAdapter<String>(getActivity(),
+        adapterCuissons = new ArrayAdapter<>(getActivity(),
             R.layout.ligne_liste, R.id.item_cuisson, cuissonAffichees);
         listeCuissons.setAdapter(adapterCuissons);
         registerForContextMenu(listeCuissons);
