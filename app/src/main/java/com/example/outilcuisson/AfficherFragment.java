@@ -39,18 +39,13 @@ public class AfficherFragment extends Fragment {
     /**
      * TODO
      */
-    public ArrayAdapter<String> adapterCuissons;
+    public static ArrayAdapter<String> adapterCuissons;
 
 
     /**
      * Liste des cuissons enregistrées dans l'application
      */
     public static ArrayList<String> cuissonAffichees;
-
-    /**
-     * Le nom du fichier de sauvegarde
-     */
-    public static final String FICHIER_SAUVEGARDE = "cuisson.save";
 
 
     public AfficherFragment() {
@@ -93,46 +88,6 @@ public class AfficherFragment extends Fragment {
     }
 
     /**
-     * Met a jour le fichier dataCuisson.txt qui sauvegarde la liste des
-     * cuissons
-     */
-    private static void updateSaveFile() {
-        try {
-            FileOutputStream fos = new FileOutputStream(FICHIER_SAUVEGARDE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            oos.writeObject(cuissonAffichees);
-
-            oos.close();
-            fos.close();
-            System.out.println("Sauvegardé avec succès");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Charge la liste des cuissons contenue dans le fichier dataCuisson.txt
-     */
-    private static void loadSaveFile() {
-        try {
-            FileInputStream fis = new FileInputStream(FICHIER_SAUVEGARDE);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
-            cuissonAffichees = (ArrayList) ois.readObject();
-
-            ois.close();
-            fis.close();
-            System.out.println("Chargement des données avec succès");
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } catch (ClassNotFoundException c) {
-            System.out.println("Class not found");
-            c.printStackTrace();
-        }
-    }
-
-    /**
      * Crée le menu contextuel en le désérialisant à partir du fichier
      * menu_contextuel.xml
      */
@@ -156,7 +111,6 @@ public class AfficherFragment extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.supprContext:
-                // TODO
                 cuissonAffichees.remove(information.position);
                 adapterCuissons.notifyDataSetChanged();
                 listeCuissons.requestLayout();
