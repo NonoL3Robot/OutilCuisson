@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <style name="clickable_element_style">
+        <item name="android:backgroundTint">@color/background_color</item>
+    </style>
+    <style name="tablayout_style" parent="clickable_element_style">
+        <item name="tabTextColor">@color/text_color</item>
+        <item name="tabIndicatorColor">@color/text_color</item>
+    </style>
+    <style name="button_ok_style" parent="clickable_element_style">
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+    <style name="button_cancel_style" parent="clickable_element_style">
+        <item name="buttonBarNegativeButtonStyle">?attr/buttonBarButtonStyle</item>
+
+    </style>
+
+    <style name="textview_style">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">@dimen/cuissons_margin</item>
+    </style>
+    <style name="titre_style" parent="@style/textview_style">
+        <item name="android:textSize">@dimen/titre_police</item>
+        <item name="android:layout_marginBottom">@dimen/title_margin_bottom</item>
+    </style>
+    <style name="label_style" parent="@style/textview_style">
+        <item name="android:textSize">@dimen/categories_police</item>
+    </style>
+</resources>

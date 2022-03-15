@@ -6,14 +6,16 @@
      Un padding est ajouté autour du texte
      fichier ligne_liste.xml                               12/21 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/item_cuisson"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:typeface="monospace"
-        android:textStyle="bold"/>
+            android:id="@+id/item_cuisson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:typeface="monospace"
+            android:textStyle="bold"
+            android:layout_margin="@dimen/cuissons_margin"
+            android:textSize="@dimen/cuissons_police"/>
 </LinearLayout>
