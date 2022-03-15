@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,11 +30,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements AjouterFragment.EcouteurAjout {
 
@@ -69,128 +74,65 @@ public class MainActivity extends AppCompatActivity implements AjouterFragment.E
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        printFile("print avant readFromFile()");
-        readFromFile(this);
-
-        printFile("print après readFromFile()");
+    protected void onStart() {
+        super.onStart();
+        readFromFile();
+        System.out.println("onResume : " + AfficherFragment.cuissonAffichees);
     }
 
     @Override
-    protected void onPause() {
-        printFile("print avant writeToFile()");
-        writeToFile("test", this);
-        printFile("print après writeToFile()");
-        super.onPause();
+    protected void onDestroy() {
+        System.out.println(
+            "Avant write : " + AfficherFragment.cuissonAffichees);
+        writeToFile();
+        System.out.println(
+            "Après write : " + AfficherFragment.cuissonAffichees);
+        super.onDestroy();
     }
 
-    private String readFromFile(Context context) {
-
-        String ret = "";
-
-        try {
-            InputStream inputStream = context.openFileInput(NOM_FICHIER);
-
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(
-                    inputStream);
-                BufferedReader bufferedReader = new BufferedReader(
-                    inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ((receiveString = bufferedReader.readLine()) != null) {
-                    stringBuilder.append("\n").append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        }
-
-        return ret;
-    }
-
-    private void writeToFile(String data, Context context) {
-        try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-                context.openFileOutput(NOM_FICHIER, Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
-    //    private void writeToFile() {
-    //        try {
-    //            File path = getFilesDir();
-    //            File file = new File(path, NOM_FICHIER);
-    //
-    //            if (!path.exists()) {
-    //                path.mkdirs();
-    //            }
-    //            FileWriter fw = new FileWriter(file);
-    //            BufferedWriter bw = new BufferedWriter(fw);
-    //
-    //            printFile("print avant écriture");
-    //
-    //            for (String s : AfficherFragment.cuissonAffichees) {
-    //                bw.write(s + "\n");
-    //            }
-    //
-    //            printFile("print après écriture");
-    //
-    //            fw.close();
-    //        } catch (IOException e) {
-    //            Log.e(TAG, "File write failed: " + e.toString());
-    //        }
-    //    }
-    //
-    //    private void readFromFile() {
-    //        try {
-    //            File path = getFilesDir();
-    //            File file = new File(path, NOM_FICHIER);
-    //            FileReader fr = new FileReader(file);
-    //            BufferedReader br = new BufferedReader(fr);
-    //            String receiveString;
-    //
-    //            printFile("print avant lecture");
-    //
-    //            while ((receiveString = br.readLine()) != null) {
-    //                AfficherFragment.cuissonAffichees.add(receiveString);
-    //            }
-    //
-    //            printFile("print après lecture");
-    //
-    //            fr.close();
-    //        } catch (FileNotFoundException e) {
-    //            Log.e(TAG, "File not found: " + e.toString());
-    //        } catch (IOException e) {
-    //            Log.e(TAG, "Can not read file: " + e.toString());
-    //        }
-    //    }
-
-    public void printFile(String intitule) {
-        System.out.println(intitule);
+    private void writeToFile() {
         try {
             File path = getFilesDir();
             File file = new File(path, NOM_FICHIER);
-            BufferedReader in = new BufferedReader(new FileReader(file));
-            String line = in.readLine();
-            while (line != null) {
-                System.out.println(line);
-                line = in.readLine();
+
+            if (!path.exists()) {
+                path.mkdirs();
             }
-            in.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(AfficherFragment.cuissonAffichees);
+
+            oos.close();
+            fos.close();
+            System.out.println("Ecriture réalisée");
+
         } catch (IOException e) {
+            Log.e(TAG, "File write failed: " + e.toString());
+        }
+    }
+
+    private void readFromFile() {
+        try {
+            File path = getFilesDir();
+            File file = new File(path, NOM_FICHIER);
+
+            FileInputStream fis = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            AfficherFragment.cuissonAffichees
+                = (ArrayList<String>) ois.readObject();
+
+            ois.close();
+            fis.close();
+            System.out.println("Lecture réalisée");
+
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e(TAG, "Can not read file: " + e.toString());
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

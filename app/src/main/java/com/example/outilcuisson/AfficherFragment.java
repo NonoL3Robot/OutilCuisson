@@ -95,8 +95,7 @@ public class AfficherFragment extends Fragment {
     public void onCreateContextMenu(ContextMenu menu,
                                     View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
-        // pas sûr du super.getContext() (Noé)
-        new MenuInflater(super.getContext()).inflate(R.menu.menu_contextuel,
+        new MenuInflater(getContext()).inflate(R.menu.menu_contextuel,
                                                      menu);
         super.onCreateContextMenu(menu, v, menuInfo);
     }

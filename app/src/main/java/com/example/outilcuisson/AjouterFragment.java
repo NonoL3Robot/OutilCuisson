@@ -119,7 +119,7 @@ public class AjouterFragment extends Fragment {
                                                          R.string.alert_neutral_button,
                                                          null)
                                                      .show();
-                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         });
 
