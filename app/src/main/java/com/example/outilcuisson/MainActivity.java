@@ -2,6 +2,7 @@ package com.example.outilcuisson;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -211,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements AjouterFragment.E
                 afficherAide();
                 break;
             case R.id.reinitOptions:
-                // TODO
+                reinitData();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -222,6 +223,21 @@ public class MainActivity extends AppCompatActivity implements AjouterFragment.E
                                      .setMessage(R.string.alert_content_help)
                                      .setNeutralButton(
                                          R.string.alert_neutral_button, null)
+                                     .show();
+    }
+
+    public void reinitData() {
+        new AlertDialog.Builder(this).setTitle(R.string.alert_title_reinit)
+                                     .setMessage(R.string.alert_content_reinit)
+                                     .setNeutralButton(
+                                         R.string.alert_neutral_button, null)
+                                     .setPositiveButton(R.string.btn_valider,
+                                                        (dialogInterface, i) -> {
+                                                            AfficherFragment.adapterCuissons
+                                                                .clear();
+                                                            AfficherFragment.adapterCuissons
+                                                                .notifyDataSetChanged();
+                                                        })
                                      .show();
     }
 
