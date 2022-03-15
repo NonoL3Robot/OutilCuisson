@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
             android:id="@+id/aideOptions"
-            android:title="@string/option_aide"/>
+            android:title="@string/alert_title_aide"/>
     <item
             android:id="@+id/reinitOptions"
-            android:title="@string/option_reinit"/>
+            android:title="@string/alert_title_reinit"/>
 </menu>

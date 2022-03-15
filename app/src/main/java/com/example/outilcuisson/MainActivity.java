@@ -1,5 +1,6 @@
 package com.example.outilcuisson;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -207,13 +208,21 @@ public class MainActivity extends AppCompatActivity implements AjouterFragment.E
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.aideOptions:
-                // TODO
+                afficherAide();
                 break;
             case R.id.reinitOptions:
                 // TODO
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void afficherAide() {
+        new AlertDialog.Builder(this).setTitle(R.string.alert_title_aide)
+                                     .setMessage(R.string.alert_content_help)
+                                     .setNeutralButton(
+                                         R.string.alert_neutral_button, null)
+                                     .show();
     }
 
     @Override
