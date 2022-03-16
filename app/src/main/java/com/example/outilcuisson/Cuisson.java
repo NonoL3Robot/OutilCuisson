@@ -24,18 +24,25 @@ public class Cuisson implements Serializable {
     /**
      * Nombre maximum de caractères pour le nom du plat
      */
-    private static final int LG_MAX_PLAT = 18;
+    private static final int LG_MAX_PLAT = 20;
 
+    /**
+     * Le nom du plat
+     */
     private String plat;
+
+    /**
+     * La durée en heure de la cuisson du plat
+     */
     private int heure;
     private int minute;
     private int degree;
 
-    public Cuisson(String plat, int heure, int minute, int degree) throws
-                                                                   Exception {
-        if (!platValide(plat) || !heureCuissonValide(heure)
-            || !minuteCuissonValide(minute) || !temperatureValide(degree)) {
-            throw new Exception(CHAINE_DEFAUT);
+    public Cuisson(String plat, int heure, int minute, int degree) {
+        if (!platValide(plat)
+                || !horaireValide(heure, minute)
+                || !temperatureValide(degree)) {
+            throw new IllegalArgumentException(CHAINE_DEFAUT);
         }
         this.plat = plat;
         this.heure = heure;
@@ -56,6 +63,12 @@ public class Cuisson implements Serializable {
                && !nomPlat.contains("|");
     }
 
+    public static boolean horaireValide(int heure, int minute) {
+        return !(heure == 0 && minute == 0)
+                && heureCuissonValide(heure)
+                && minuteCuissonValide(minute);
+    }
+
     /**
      * Détermine si le nombre d'heures d'une durée de cuisson est valide
      * (comprise entre 0 et 9)
@@ -63,7 +76,7 @@ public class Cuisson implements Serializable {
      * @param heureCuisson heure à tester
      * @return un booléen égal à vrai ssi l'heure de la durée est valide
      */
-    public static boolean heureCuissonValide(int heureCuisson) {
+    private static boolean heureCuissonValide(int heureCuisson) {
         return 0 <= heureCuisson && heureCuisson <= HEURE_MAX;
     }
 
@@ -75,7 +88,7 @@ public class Cuisson implements Serializable {
      * @return un booléen égal à vrai ssi le nombre de minutes de la durée
      * est valide
      */
-    public static boolean minuteCuissonValide(int minuteCuisson) {
+    private static boolean minuteCuissonValide(int minuteCuisson) {
         return 0 <= minuteCuisson && minuteCuisson <= 59;
     }
 
@@ -90,6 +103,9 @@ public class Cuisson implements Serializable {
         return 0 < temperature && temperature <= TEMPERATURE_MAX;
     }
 
+    /**
+     * @return
+     */
     public String getPlat() {
         return plat;
     }
@@ -106,10 +122,19 @@ public class Cuisson implements Serializable {
         return degree;
     }
 
+    public void editCuisson(String plat, int heure, int minute, int degree) {
+        if (!platValide(plat) || !horaireValide(heure, minute) || !temperatureValide(degree))
+            throw new IllegalArgumentException();
+
+        this.plat = plat;
+        this.heure = heure;
+        this.minute = minute;
+        this.degree = degree;
+    }
+
     @Override
     public String toString() {
         StringBuilder aRenvoyer = new StringBuilder();
-
 
         // on insère le nom du plat
         aRenvoyer.append(plat);
@@ -161,8 +186,7 @@ public class Cuisson implements Serializable {
      */
     public static int extraireTemperature(String source) {
         int temperature;                // température extraite
-        String
-            chaineTemperature;       // température extraite en tant que chaîne
+        String chaineTemperature;       // température extraite en tant que chaîne
 
 
         try {
@@ -184,20 +208,17 @@ public class Cuisson implements Serializable {
      * Renvoie le thermostat correspondant à la temperature argument
      * (celle-ci doit être inférieure à TEMPERATURE_MAX)
      *
-     * @param temperature température à convertir
      * @return l'entier égal au thermostat ou -1 si la température est invalide
      */
-    public static int thermostat(int temperature) {
-        int aRenvoyer;          // valeur du thermostat à renvoyer
-        if (temperature <= 0 || temperature > TEMPERATURE_MAX) {
-            aRenvoyer = -1;
-        } else {
-            aRenvoyer = temperature / 30;
-            if (temperature % 30 > 15) {
-                aRenvoyer++;
-            }
+    public int getThermostat() {
+        int thermostat = -1;
+
+        if (temperatureValide(degree)) {
+            thermostat = degree / 30;
+            if (degree % 30 > 15) thermostat++;
         }
-        return aRenvoyer;
+
+        return thermostat;
     }
 
     /**
@@ -209,9 +230,7 @@ public class Cuisson implements Serializable {
      */
     private static String chaineEspace(int nbEspace) {
         StringBuilder aRenvoyer = new StringBuilder();
-        for (int i = 1; i <= nbEspace; i++) {
-            aRenvoyer.append(" ");
-        }
+        for (int i = 1; i <= nbEspace; i++) aRenvoyer.append(" ");
         return aRenvoyer.toString();
     }
 }

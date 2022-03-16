@@ -24,13 +24,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import com.google.android.material.navigation.NavigationView;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class AfficherFragment extends Fragment {
@@ -38,7 +31,7 @@ public class AfficherFragment extends Fragment {
     /**
      * TODO
      */
-    public ListView listeCuissons;
+    public ListView listView;
 
     /**
      * TODO
@@ -46,14 +39,7 @@ public class AfficherFragment extends Fragment {
     public static ArrayAdapter<String> adapterCuissons;
 
 
-    /**
-     * Liste des cuissons enregistrées dans l'application
-     */
-    public static ArrayList<String> cuissonAffichees;
-
-
-    public AfficherFragment() {
-    }
+    public AfficherFragment() {}
 
     public static AfficherFragment newInstance() {
         return new AfficherFragment();
@@ -70,25 +56,35 @@ public class AfficherFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.afficher_fragment, container,
                                      false);
-        cuissonAffichees = new ArrayList<>();
-        listeCuissons = view.findViewById(R.id.listeCuisson);
+        listView = view.findViewById(R.id.listeCuisson);
         adapterCuissons = new ArrayAdapter<>(getActivity(),
-            R.layout.ligne_liste, R.id.item_cuisson, cuissonAffichees);
-        listeCuissons.setAdapter(adapterCuissons);
-        registerForContextMenu(listeCuissons);
+            R.layout.ligne_liste, R.id.item_cuisson, new ArrayList<>());
+        listView.setAdapter(adapterCuissons);
+        registerForContextMenu(listView);
 
         return view;
     }
 
-    /**
-     * Ajouter une cuisson
-     *
-     * @param cuisson La cuisson à ajouter
-     */
-    public void addCuisson(Cuisson cuisson) {
-        adapterCuissons.add(cuisson.toString());
+    @Override
+    public void onResume() {
+        super.onResume();
+        afficherCuisson();
+    }
+
+    public void afficherCuisson() {
+        adapterCuissons.clear();
+
+        /* Ajoute l'objet cuisson  */
+        ArrayList<Cuisson> listeCuisson = ((MainActivity)getActivity()).getListeCuisson();
+
+        /* On affiche toutes les cuissons de la liste dans la view */
+        for (Cuisson cuisson : listeCuisson) {
+            adapterCuissons.add(cuisson.toString());
+        }
+
+        /* Met à jour la liste */
         adapterCuissons.notifyDataSetChanged();
-        listeCuissons.requestLayout();
+        listView.requestLayout();
     }
 
     /**
@@ -112,30 +108,30 @@ public class AfficherFragment extends Fragment {
         AdapterView.AdapterContextMenuInfo information
             = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
+        int index = information.position;
+
         switch (item.getItemId()) {
             case R.id.thermosContext:
-                afficherThermos(cuissonAffichees.get(information.position));
+                afficherThermos(index);
                 break;
             case R.id.modifierContext:
-//                modifierCuisson();
+                ((MainActivity) getActivity()).editerCuisson(index);
                 break;
             case R.id.supprContext:
-                cuissonAffichees.remove(information.position);
-                adapterCuissons.notifyDataSetChanged();
-                listeCuissons.requestLayout();
-                break;
-
-            case R.id.cancelContext:
+                supprimerCuisson(index);
                 break;
         }
         return super.onContextItemSelected(item);
     }
 
-    public void afficherThermos(String cuisson) {
+    public void afficherThermos(int index) {
+        /* Recupère l'objet cuisson */
+        Cuisson cuisson = ((MainActivity) getActivity()).getListeCuisson().get(index);
+
         String content = getString(R.string.alert_content_thermos,
-                                   Cuisson.extrairePlat(cuisson),
-                                   Cuisson.extraireTemperature(cuisson),
-                                   Cuisson.thermostat(Cuisson.extraireTemperature(cuisson)));
+                                   cuisson.getPlat(),
+                                   cuisson.getDegree(),
+                                   cuisson.getThermostat());
         new AlertDialog.Builder(getContext()).setTitle(R.string.alert_title_thermos)
                                              .setMessage(content)
                                              .setNeutralButton(
@@ -144,13 +140,12 @@ public class AfficherFragment extends Fragment {
                                              .show();
     }
 
-    public void modifierCuisson() {
-//        ((MainActivity)getActivity()).changeFragment(1);
-        Fragment fragment = new AjouterFragment();
-        FragmentManager fragmentManager = fragment.getChildFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.ajouter_fragment, fragment, fragment.toString());
-        fragmentTransaction.addToBackStack(fragment.toString());
-        fragmentTransaction.commit();
+    /**
+     * Supprime l'objet correspondant cuisson
+     * @param index
+     */
+    public void supprimerCuisson(int index) {
+        ((MainActivity) getActivity()).getListeCuisson().remove(index);
+        afficherCuisson();
     }
 }

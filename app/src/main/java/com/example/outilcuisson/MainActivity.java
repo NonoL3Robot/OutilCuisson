@@ -1,59 +1,42 @@
 package com.example.outilcuisson;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AjouterFragment.EcouteurAjout {
 
+public class MainActivity extends AppCompatActivity {
     /**
      * Le nom du fichier de sauvegarde
      */
     private static final String NOM_FICHIER = "cuisson.txt";
 
-    /**
-     * Tag utilisé dans les messages de log. Les messages de log sont
-     * affichés en cas
-     * de problème lors de l'accès au fichier
-     */
-    private static final String TAG = "Cuisson";
+    private ArrayList<Cuisson> listeCuisson;
 
     private ViewPager2 gestionnairePagination;
+
+    public boolean modeEdition = false;
+    public Cuisson cuissonAEditer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,68 +56,83 @@ public class MainActivity extends AppCompatActivity implements AjouterFragment.E
         new TabLayoutMediator(gestionnaireOnglet, gestionnairePagination,
                               (tab, position) -> tab.setText(
                                   titreOnglet[position])).attach();
+
+        /* Crée la liste des cuissons */
+        listeCuisson = new ArrayList<>();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        readFromFile();
-        System.out.println("onResume : " + AfficherFragment.cuissonAffichees);
+    protected void onResume() {
+        super.onResume();
+        chargerFichier();
     }
 
     @Override
-    protected void onDestroy() {
-        System.out.println(
-            "Avant write : " + AfficherFragment.cuissonAffichees);
-        writeToFile();
-        System.out.println(
-            "Après write : " + AfficherFragment.cuissonAffichees);
-        super.onDestroy();
+    protected void onPause() {
+        sauvegarderFichier();
+        super.onPause();
     }
 
-    private void writeToFile() {
-        try {
-            File path = getFilesDir();
-            File file = new File(path, NOM_FICHIER);
+    /**
+     * Ajoute une cuisson a la liste des cuissons
+     *
+     * @param cuisson Objet cuisson a ajouter dans la liste
+     */
+    public void addCuisson(Cuisson cuisson) {
+        if (estDansCuisson(cuisson)) throw new IllegalArgumentException("Il existe deja un plat avec ce nom");
 
-            if (!path.exists()) {
-                path.mkdirs();
-            }
+        listeCuisson.add(cuisson);
 
-            FileOutputStream fos = new FileOutputStream(file);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
+        /* Test affichage du contennu de la liste des cuisson */
+        System.out.println(Arrays.asList(listeCuisson));
+    }
 
-            oos.writeObject(AfficherFragment.cuissonAffichees);
+    public ArrayList<Cuisson> getListeCuisson() {
+        return listeCuisson;
+    }
 
-            oos.close();
-            fos.close();
-            System.out.println("Ecriture réalisée");
-
-        } catch (IOException e) {
-            Log.e(TAG, "File write failed: " + e.toString());
+    private boolean estDansCuisson(Cuisson aTester) {
+        for (Cuisson cuisson : listeCuisson) {
+            if (cuisson.getPlat().equals(aTester.getPlat())) return true;
         }
+        return false;
     }
 
-    private void readFromFile() {
-        try {
-            File path = getFilesDir();
-            File file = new File(path, NOM_FICHIER);
+    public void editerCuisson(int index) {
+        changeFragment(1);
+        modeEdition = true;
+        cuissonAEditer = listeCuisson.get(index);
+    }
 
-            FileInputStream fis = new FileInputStream(file);
+
+    private void chargerFichier() {
+        try {
+
+
+            FileInputStream fis = openFileInput(NOM_FICHIER);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            AfficherFragment.cuissonAffichees
-                = (ArrayList<String>) ois.readObject();
+            listeCuisson = (ArrayList<Cuisson>) ois.readObject();
 
             ois.close();
             fis.close();
-            System.out.println("Lecture réalisée");
 
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "File not found: " + e.toString());
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sauvegarderFichier() {
+        try {
+            FileOutputStream fos = openFileOutput(NOM_FICHIER, MODE_PRIVATE);
+            ObjectOutputStream oos =  new ObjectOutputStream(fos);
+
+            oos.writeObject(listeCuisson);
+
+            oos.close();
+            fos.close();
+
         } catch (IOException e) {
-            Log.e(TAG, "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -163,37 +161,22 @@ public class MainActivity extends AppCompatActivity implements AjouterFragment.E
     }
 
     public void afficherAide() {
-        new AlertDialog.Builder(this).setTitle(R.string.alert_title_aide)
-                                     .setMessage(R.string.alert_content_help)
-                                     .setNeutralButton(
-                                         R.string.alert_neutral_button, null)
-                                     .show();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.alert_title_aide)
+                .setMessage(R.string.alert_content_help)
+                .setNeutralButton(R.string.alert_neutral_button, null)
+                .show();
     }
 
     public void reinitData() {
-        new AlertDialog.Builder(this).setTitle(R.string.alert_title_reinit)
-                                     .setMessage(R.string.alert_content_reinit)
-                                     .setNeutralButton(
-                                         R.string.alert_neutral_button, null)
-                                     .setPositiveButton(R.string.btn_valider,
-                                                        (dialogInterface, i) -> {
-                                                            AfficherFragment.adapterCuissons
-                                                                .clear();
-                                                            AfficherFragment.adapterCuissons
-                                                                .notifyDataSetChanged();
-                                                        })
-                                     .show();
-    }
-
-    @Override
-    public void recevoirCuisson(Cuisson cuisson) {
-        AfficherFragment fragmentAModifier
-            = (AfficherFragment) getSupportFragmentManager().findFragmentByTag(
-            "f0");
-
-        if (fragmentAModifier != null) {
-            fragmentAModifier.addCuisson(cuisson);
-        }
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.alert_title_reinit)
+                .setMessage(R.string.alert_content_reinit)
+                .setNeutralButton(R.string.alert_neutral_button, null)
+                .setPositiveButton(R.string.btn_valider, (dialogInterface, i) -> {
+                    AfficherFragment.adapterCuissons.clear();
+                    AfficherFragment.adapterCuissons.notifyDataSetChanged();})
+                .show();
     }
 
     public void changeFragment(int pos) {
