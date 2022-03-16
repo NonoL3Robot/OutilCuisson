@@ -17,7 +17,7 @@
     <style name="textview_style">
         <item name="android:textColor">@color/text_color</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_margin">@dimen/cuissons_margin</item>
+        <item name="android:layout_margin">@dimen/categories_margin</item>
     </style>
     <style name="titre_style" parent="@style/textview_style">
         <item name="android:textSize">@dimen/titre_police</item>
@@ -30,8 +30,10 @@
     <style name="ligne_liste_style">
         <item name="android:typeface">monospace</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_margin">@dimen/cuissons_margin</item>
+        <item name="android:layout_margin">@dimen/categories_margin</item>
         <item name="android:textSize">@dimen/cuissons_police</item>
         <item name="android:textColor">@color/text_color</item>
+        <item name="android:paddingTop">@dimen/cuissons_padding</item>
+        <item name="android:paddingBottom">@dimen/cuissons_padding</item>
     </style>
 </resources>
