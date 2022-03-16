@@ -16,8 +16,9 @@
         apparaître un menu contextuel possédant plusieurs options.</string>
 
     <!-- Menu contextuel -->
-    <string name="context_suppr">"Supprimer"</string>
     <string name="context_thermos">"Voir thermostat"</string>
+    <string name="context_modifier">"Modifier"</string>
+    <string name="context_suppr">"Supprimer"</string>
     <string name="context_cancel">"Annuler"</string>
 
     <!-- AlertDialog -->

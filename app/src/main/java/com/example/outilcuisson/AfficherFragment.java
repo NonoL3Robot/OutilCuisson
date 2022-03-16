@@ -20,7 +20,11 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -109,14 +113,18 @@ public class AfficherFragment extends Fragment {
             = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
+            case R.id.thermosContext:
+                afficherThermos(cuissonAffichees.get(information.position));
+                break;
+            case R.id.modifierContext:
+//                modifierCuisson();
+                break;
             case R.id.supprContext:
                 cuissonAffichees.remove(information.position);
                 adapterCuissons.notifyDataSetChanged();
                 listeCuissons.requestLayout();
                 break;
-            case R.id.thermosContext:
-                afficherThermos(cuissonAffichees.get(information.position));
-                break;
+
             case R.id.cancelContext:
                 break;
         }
@@ -134,5 +142,15 @@ public class AfficherFragment extends Fragment {
                                                  R.string.alert_neutral_button,
                                                  null)
                                              .show();
+    }
+
+    public void modifierCuisson() {
+//        ((MainActivity)getActivity()).changeFragment(1);
+        Fragment fragment = new AjouterFragment();
+        FragmentManager fragmentManager = fragment.getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.ajouter_fragment, fragment, fragment.toString());
+        fragmentTransaction.addToBackStack(fragment.toString());
+        fragmentTransaction.commit();
     }
 }

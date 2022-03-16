@@ -106,6 +106,7 @@ public class AjouterFragment extends Fragment {
                 Cuisson cuisson = new Cuisson(txtPlat, hDuree, mDuree,
                                               temperature);
                 activiteQuiMEcoute.recevoirCuisson(cuisson);
+                viderChamps();
                 String content = getString(R.string.toast_ajout_ok,
                                            cuisson.getPlat());
                 Toast.makeText(getContext(), content, Toast.LENGTH_SHORT)
@@ -127,13 +128,16 @@ public class AjouterFragment extends Fragment {
          * Efface le contenu des champs de textes et met le TimePicker à 0h40
          */
         btnEffacer.setOnClickListener(view2 -> {
-
-            inputPlat.setText("");
-            inputDuree.setHour(0);
-            inputDuree.setMinute(40);
-            inputTemperature.setText("");
+            viderChamps();
         });
 
         return view;
+    }
+
+    private void viderChamps() {
+        inputPlat.setText("");
+        inputDuree.setHour(0);
+        inputDuree.setMinute(40);
+        inputTemperature.setText("");
     }
 }

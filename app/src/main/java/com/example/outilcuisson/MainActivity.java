@@ -53,12 +53,14 @@ public class MainActivity extends AppCompatActivity implements AjouterFragment.E
      */
     private static final String TAG = "Cuisson";
 
+    private ViewPager2 gestionnairePagination;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewPager2 gestionnairePagination = findViewById(
+        gestionnairePagination = findViewById(
             R.id.activity_main_viewpager);
         TabLayout gestionnaireOnglet = findViewById(R.id.tab_layout);
 
@@ -192,5 +194,9 @@ public class MainActivity extends AppCompatActivity implements AjouterFragment.E
         if (fragmentAModifier != null) {
             fragmentAModifier.addCuisson(cuisson);
         }
+    }
+
+    public void changeFragment(int pos) {
+        gestionnairePagination.setCurrentItem(pos);
     }
 }
