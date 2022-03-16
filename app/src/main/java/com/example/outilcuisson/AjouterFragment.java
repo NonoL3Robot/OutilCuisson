@@ -149,10 +149,11 @@ public class AjouterFragment extends Fragment {
             } catch (CuissonDejaExistanteException e) {
                 new AlertDialog
                         .Builder(getContext())
-                        .setTitle("Titre") // TODO
-                        .setMessage("Message ?") // TODO
-                        .setNeutralButton(R.string.alert_neutral_button,null)
-                        .setPositiveButton("Oui", (dialogInterface, i) -> {
+                        .setTitle(R.string.alert_title_doublon)
+                        .setMessage(R.string.alert_content_doublon)
+                        .setNegativeButton(R.string.alert_no_doublon,null)
+                        .setPositiveButton(R.string.alert_yes_doublon,
+                                           (dialogInterface, i) -> {
                             ArrayList<Cuisson> listeCuisson = ((MainActivity)getActivity()).getListeCuisson();
 
                             for (int j = 0; j < listeCuisson.size() ; j++) {
