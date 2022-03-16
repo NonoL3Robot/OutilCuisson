@@ -21,27 +21,37 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 
 import java.util.ArrayList;
 
+/**
+ * Fragment qui affiche la liste des cuissons de l'application
+ *
+ * @author THIZY Alexandre
+ * @author VABRE Lucàs
+ * @author VILLENEUVE Noé
+ */
 public class AfficherFragment extends Fragment {
 
     /**
-     * TODO
+     * Activité parente
      */
-    public ListView listView;
+    private MainActivity activity;
 
     /**
-     * TODO
+     * Liste visuelle des cuissons
+     */
+    private ListView listView;
+
+    /**
+     * Adapter qui fait le lien entre la liste visuelle et une ArrayList de
+     * String
      */
     public static ArrayAdapter<String> adapterCuissons;
 
-
-    public AfficherFragment() {}
-
+    /**
+     * @return une nouvelle instance de cette classe
+     */
     public static AfficherFragment newInstance() {
         return new AfficherFragment();
     }
@@ -55,13 +65,18 @@ public class AfficherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.afficher_fragment, container,
-                                     false);
+
+        View view = inflater.inflate(R.layout.afficher_fragment, container,false);
+
+        /* Elements intéractifs */
         listView = view.findViewById(R.id.listeCuisson);
         adapterCuissons = new ArrayAdapter<>(getActivity(),
-            R.layout.ligne_liste, R.id.item_cuisson, new ArrayList<>());
+                R.layout.ligne_liste, R.id.item_cuisson, new ArrayList<>());
         listView.setAdapter(adapterCuissons);
         registerForContextMenu(listView);
+
+        /* Référence le main activity */
+        activity = (MainActivity) getActivity();
 
         return view;
     }
@@ -72,11 +87,15 @@ public class AfficherFragment extends Fragment {
         afficherCuisson();
     }
 
+    /**
+     * Met a jour la liste visuelle des cuissons par rapport au cuissons
+     * enregistré dans le MainActivity
+     */
     public void afficherCuisson() {
         adapterCuissons.clear();
 
         /* Ajoute l'objet cuisson  */
-        ArrayList<Cuisson> listeCuisson = ((MainActivity)getActivity()).getListeCuisson();
+        ArrayList<Cuisson> listeCuisson = activity.getListeCuisson();
 
         /* On affiche toutes les cuissons de la liste dans la view */
         for (Cuisson cuisson : listeCuisson) {
@@ -97,7 +116,7 @@ public class AfficherFragment extends Fragment {
                                     @NonNull View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         new MenuInflater(getContext()).inflate(R.menu.menu_contextuel,
-                                                     menu);
+                menu);
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
@@ -108,7 +127,7 @@ public class AfficherFragment extends Fragment {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo information
-            = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         int index = information.position;
 
@@ -117,7 +136,7 @@ public class AfficherFragment extends Fragment {
                 afficherThermos(index);
                 break;
             case R.id.modifierContext:
-                ((MainActivity) getActivity()).editerCuisson(index);
+                activity.editerCuisson(index);
                 break;
             case R.id.supprContext:
                 supprimerCuisson(index);
@@ -126,26 +145,36 @@ public class AfficherFragment extends Fragment {
         return super.onContextItemSelected(item);
     }
 
+    /**
+     * Crée une fenêtre qui montre les informations de la cuisson sélectionnée
+     * avec notamment la valeur du thermostat
+     *
+     * @param index indice de la cuisson sélectionné dans la liste des cuissons
+     */
     public void afficherThermos(int index) {
         /* Recupère l'objet cuisson */
-        Cuisson cuisson = ((MainActivity) getActivity()).getListeCuisson().get(index);
+        Cuisson cuisson = activity.getListeCuisson().get(index);
 
         String content = getString(R.string.alert_content_thermos,
-                                   cuisson.getPlat(),
-                                   cuisson.getDegree(),
-                                   cuisson.getThermostat());
-        new AlertDialog.Builder(getContext()).setTitle(R.string.alert_title_thermos)
-                                             .setMessage(content)
-                                             .setNeutralButton(R.string.alert_neutral_button,null)
-                                             .show();
+                cuisson.getPlat(),
+                cuisson.getDegree(),
+                cuisson.getThermostat());
+        new AlertDialog
+                .Builder(getContext())
+                .setTitle(R.string.alert_title_thermos)
+                .setMessage(content)
+                .setNeutralButton(R.string.alert_neutral_button, null)
+                .show();
     }
 
     /**
      * Supprime l'objet correspondant cuisson
-     * @param index
+     *
+     * @param index indice de la cuissons sélectionnée dans la liste des
+     *              cuissons
      */
     public void supprimerCuisson(int index) {
-        ((MainActivity) getActivity()).getListeCuisson().remove(index);
+        activity.getListeCuisson().remove(index);
         afficherCuisson();
     }
 }

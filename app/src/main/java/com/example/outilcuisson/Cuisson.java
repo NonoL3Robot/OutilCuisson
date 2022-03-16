@@ -1,7 +1,22 @@
+/*
+ * Cuisson.java, 16/03/2022
+ * IUT Rodez 2021-2022, INFO 2
+ * pas de copyright, aucun droits
+ */
+
 package com.example.outilcuisson;
 
 import java.io.Serializable;
 
+/**
+ * Classe qui défini une cuisson
+ * Elements serealizable qui permettra d'être sauvegardé et chargé depuis un
+ * fichier
+ *
+ * @author THIZY Alexandre
+ * @author VABRE Lucàs
+ * @author VILLENEUVE Noé
+ */
 public class Cuisson implements Serializable {
 
     /**
@@ -38,12 +53,23 @@ public class Cuisson implements Serializable {
     private int minute;
     private int degree;
 
+    /**
+     * Crée une nouvelle cuisson
+     *
+     * @param plat La nom du plat
+     * @param heure La durée en heure
+     * @param minute La durée en minutes
+     * @param degree La température en degrée
+     * @throws IllegalArgumentException Si les valeurs passées en arguments
+     * ne sont pas corrects
+     */
     public Cuisson(String plat, int heure, int minute, int degree) {
         if (!platValide(plat)
                 || !horaireValide(heure, minute)
                 || !temperatureValide(degree)) {
             throw new IllegalArgumentException(CHAINE_DEFAUT);
         }
+
         this.plat = plat;
         this.heure = heure;
         this.minute = minute;
@@ -63,6 +89,15 @@ public class Cuisson implements Serializable {
                && !nomPlat.contains("|");
     }
 
+    /**
+     * Prédicat qui défini si un horaire est valide
+     * Les heures et les minutes doivent être valides et ne doivent pas être
+     * nulles
+     *
+     * @param heure La durée en heure a tester
+     * @param minute La durée en minutes a tester
+     * @return true si le prédicat est vérifié, false sinon
+     */
     public static boolean horaireValide(int heure, int minute) {
         return !(heure == 0 && minute == 0)
                 && heureCuissonValide(heure)
@@ -104,24 +139,42 @@ public class Cuisson implements Serializable {
     }
 
     /**
-     * @return
+     * @return Le nom du plat
      */
     public String getPlat() {
         return plat;
     }
 
+    /**
+     * @return La durée en heure
+     */
     public int getHeure() {
         return heure;
     }
 
+    /**
+     * @return La durée en minute
+     */
     public int getMinute() {
         return minute;
     }
 
+    /**
+     * @return La température en degré
+     */
     public int getDegree() {
         return degree;
     }
 
+    /**
+     * Edite la totalité des champs de la cuisson
+     *
+     * @param plat Le nouveau nom du plat
+     * @param heure La nouvelle durée en heure de la cuisson
+     * @param minute La nouvelle durée  en minutes de la cuisson
+     * @param degree Le nouvelle température de la cuisson
+     * @throws IllegalArgumentException Si les paramètres sont incorrects
+     */
     public void editCuisson(String plat, int heure, int minute, int degree) {
         if (!platValide(plat) || !horaireValide(heure, minute) || !temperatureValide(degree))
             throw new IllegalArgumentException();
@@ -134,74 +187,17 @@ public class Cuisson implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder aRenvoyer = new StringBuilder();
+        StringBuilder resultat = new StringBuilder();
 
-        // on insère le nom du plat
-        aRenvoyer.append(plat);
-        aRenvoyer.append(chaineEspace(LG_MAX_PLAT - plat.length()));
-        aRenvoyer.append(" | ");
+        resultat.append(plat)
+                .append(chaineEspace(LG_MAX_PLAT - plat.length()))
+                .append(" | ");
+        if (heure < 10) resultat.append(0);
+        resultat.append(heure).append(" h ");
+        if (minute < 10) resultat.append(0);
+        resultat.append(minute).append(" | ").append(degree);
 
-        // on insère la durée
-        aRenvoyer.append(String.valueOf(heure));
-        aRenvoyer.append(" h ");
-        if (minute < 10) {
-            aRenvoyer.append("0");
-        }
-        aRenvoyer.append(String.valueOf(minute));
-        aRenvoyer.append(" | ");
-
-        // on insère la température
-        aRenvoyer.append(String.format("%3d", degree));
-        return aRenvoyer.toString();
-    }
-
-    /**
-     * Extrait d'une chaîne le nom du plat. On suppose que la chaîne est
-     * correctement
-     * formatée dans le format de la description d'une cuisson gérée par
-     * cette classe
-     * (les 20 premiers caractères de la chaîne sont extraits)
-     *
-     * @param source chaîne source de l'extraction
-     * @return une chaîne contenant le nom du plat ou CHAINE_DEFAUT si la chaîne
-     * argument est trop courte
-     */
-    public static String extrairePlat(String source) {
-        if (source.length() < LG_MAX_PLAT) {
-            return CHAINE_DEFAUT;
-        } else {
-            return source.substring(0, LG_MAX_PLAT);
-        }
-    }
-
-    /**
-     * Extrait d'une chaîne la température de cuisson. On suppose que la chaîne
-     * est correctement formatée dans le format de la description d'une cuisson
-     * gérée par cette classe  (la température est présente sur les 3 derniers
-     * caractères de la chaîne)
-     *
-     * @param source chaîne source de l'extraction
-     * @return un entier égal à la température extraite ou bien -1 si un
-     * problème inattendu a été rencontré avec le format de la chaîne
-     */
-    public static int extraireTemperature(String source) {
-        int temperature;                // température extraite
-        String chaineTemperature;       // température extraite en tant que chaîne
-
-
-        try {
-            chaineTemperature = source.substring(source.length() - 3,
-                                                 source.length());
-            temperature = Integer.parseInt(chaineTemperature);
-        } catch (NumberFormatException | IndexOutOfBoundsException erreur) {
-
-            /*
-             *  erreur lors de l'extraction des 3 derniers caractère
-             *  ou lors de la transformation en entier
-             */
-            temperature = -1;
-        }
-        return temperature;
+        return resultat.toString();
     }
 
     /**
