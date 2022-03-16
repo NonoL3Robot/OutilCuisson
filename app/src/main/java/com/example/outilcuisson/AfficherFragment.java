@@ -6,6 +6,7 @@
 
 package com.example.outilcuisson;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -92,8 +93,8 @@ public class AfficherFragment extends Fragment {
      * menu_contextuel.xml
      */
     @Override
-    public void onCreateContextMenu(ContextMenu menu,
-                                    View v,
+    public void onCreateContextMenu(@NonNull ContextMenu menu,
+                                    @NonNull View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         new MenuInflater(getContext()).inflate(R.menu.menu_contextuel,
                                                      menu);
@@ -103,6 +104,7 @@ public class AfficherFragment extends Fragment {
     /**
      * Réalise l'action souhaité en fonction de l'item du menu selectionné
      */
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo information
@@ -134,9 +136,7 @@ public class AfficherFragment extends Fragment {
                                    cuisson.getThermostat());
         new AlertDialog.Builder(getContext()).setTitle(R.string.alert_title_thermos)
                                              .setMessage(content)
-                                             .setNeutralButton(
-                                                 R.string.alert_neutral_button,
-                                                 null)
+                                             .setNeutralButton(R.string.alert_neutral_button,null)
                                              .show();
     }
 

@@ -20,6 +20,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
 public class AjouterFragment extends Fragment {
 
     EditText inputPlat;
@@ -144,6 +146,24 @@ public class AjouterFragment extends Fragment {
                         .setNeutralButton(R.string.alert_neutral_button,null)
                         .show();
                 e.printStackTrace();
+            } catch (CuissonDejaExistanteException e) {
+                new AlertDialog
+                        .Builder(getContext())
+                        .setTitle("Titre") // TODO
+                        .setMessage("Message ?") // TODO
+                        .setNeutralButton(R.string.alert_neutral_button,null)
+                        .setPositiveButton("Oui", (dialogInterface, i) -> {
+                            ArrayList<Cuisson> listeCuisson = ((MainActivity)getActivity()).getListeCuisson();
+
+                            for (int j = 0; j < listeCuisson.size() ; j++) {
+                                if (listeCuisson.get(j).getPlat().equals(txtPlat)) {
+                                    listeCuisson.get(j).editCuisson(txtPlat, hDuree, mDuree, temperature);
+                                    champsDefaut();
+                                    break;
+                                }
+                            }
+                        })
+                        .show();
             }
         }
     }

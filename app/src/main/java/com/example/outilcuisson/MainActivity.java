@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param cuisson Objet cuisson a ajouter dans la liste
      */
-    public void addCuisson(Cuisson cuisson) {
-        if (estDansCuisson(cuisson)) throw new IllegalArgumentException("Il existe deja un plat avec ce nom");
+    public void addCuisson(Cuisson cuisson) throws CuissonDejaExistanteException {
+        if (estDansCuisson(cuisson)) throw new CuissonDejaExistanteException();
 
         listeCuisson.add(cuisson);
 
@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 .setMessage(R.string.alert_content_reinit)
                 .setNeutralButton(R.string.alert_neutral_button, null)
                 .setPositiveButton(R.string.btn_valider, (dialogInterface, i) -> {
+                    listeCuisson.clear();
                     AfficherFragment.adapterCuissons.clear();
                     AfficherFragment.adapterCuissons.notifyDataSetChanged();})
                 .show();
