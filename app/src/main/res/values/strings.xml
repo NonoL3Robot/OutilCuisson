@@ -4,9 +4,10 @@
     <!-- Menu d'options -->
     <string name="alert_title_aide">"Aide"</string>
     <string name="alert_title_reinit">"Réinitialiser"</string>
-    <string name="alert_content_reinit">"Êtes-vous sûr de vouloir réinitialiser
-        l'application ? Tous les temps de cuisson préalablement
-        rentrés seront supprimés"</string>
+    <string name="alert_content_reinit">Êtes-vous sûr de vouloir réinitialiser
+        l\'application ?
+        \nTous les temps de cuisson préalablement rentrés seront
+        supprimés.</string>
     <string name="alert_content_help">Application permettant de visualiser les
         caractéristiques d’une cuisson au four.\n\n
     L\’onglet « Ajouter » permet de saisir une nouvelle cuisson.\n Vous devez
