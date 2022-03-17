@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 /**
- * Gestionnaire des différent fragments de l'application
+ * Gestionnaire des différents fragments de l'application
  *
  * @author THIZY Alexandre
  * @author VABRE Lucàs
@@ -20,14 +20,14 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 public class AdaptateurPage extends FragmentStateAdapter {
 
     /**
-     * Nombre de fragment de l'application
+     * Nombre de fragments de l'application
      */
     private static final int NB_FRAGMENT = 2;
 
     /**
-     * Crée une adaptateur de page
+     * Crée un adaptateur de page
      *
-     * @param activite le Main Activity de référence
+     * @param activite la MainActivity de référence
      */
     public AdaptateurPage(FragmentActivity activite) {
         super(activite);

@@ -44,22 +44,22 @@ public class AjouterFragment extends Fragment {
     EditText inputPlat;
 
     /**
-     * Element graphique qui permet de sélectionner une durée
+     * Élément graphique qui permet de sélectionner une durée
      */
     TimePicker inputDuree;
 
     /**
-     * Zone de texte correspondant a la température du plat
+     * Zone de texte correspondant à la température du plat
      */
     EditText inputTemperature;
 
     /**
-     * Boutton qui efface les champs et rétablie leurs valeurs par défaut
+     * Bouton qui efface les champs et rétabli leurs valeurs par défaut
      */
     Button btnEffacer;
 
     /**
-     * Boutton qui essaye de créer/editer une cuisson si celle-ci est valide
+     * Bouton qui essaye de créer/éditer une cuisson si celle-ci est valide
      */
     Button btnValider;
 
@@ -98,11 +98,11 @@ public class AjouterFragment extends Fragment {
         inputDuree.setIs24HourView(true);
         champsDefaut();
 
-        /* Actions des buttons */
+        /* Actions des boutons */
         btnValider.setOnClickListener(this::actionBtnValider);
         btnEffacer.setOnClickListener(this::actionBtnEffacer);
 
-        /* Référence le main activity */
+        /* Référence la MainActivity */
         activity = (MainActivity) getActivity();
 
         return view;
@@ -113,16 +113,16 @@ public class AjouterFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        /* Si on est en mode edition, on préremplis le champs */
+        /* Si on est en mode édition, on pré-rempli le champ */
         if (activity.modeEdition) {
             Cuisson cuisson = activity.cuissonAEditer;
 
             System.out.println(cuisson);
 
-            /* On remplis les champs */
+            /* On rempli les champs */
             inputPlat.setText(cuisson.getPlat());
-            inputDuree.setHour(cuisson.getHeure());
-            inputDuree.setMinute(cuisson.getMinute());
+            inputDuree.setCurrentHour(cuisson.getHeure());
+            inputDuree.setCurrentMinute(cuisson.getMinute());
             inputTemperature.setText(Integer.toString(cuisson.getDegree()));
         }
     }
@@ -135,23 +135,23 @@ public class AjouterFragment extends Fragment {
     }
 
     /**
-     * Action lors du clic sur le boutton Valider
+     * Action lors du clic sur le bouton Valider
      *
-     * @param view Ecouteur d'évènement
+     * @param view Écouteur d'évènements
      */
     private void actionBtnValider(View view) {
 
         /* Récupère toutes les valeurs des champs */
         String txtPlat = inputPlat.getText().toString();
         String txtTemperature = inputTemperature.getText().toString();
-        int hDuree = inputDuree.getHour();
-        int mDuree = inputDuree.getMinute();
+        int hDuree = inputDuree.getCurrentHour();
+        int mDuree = inputDuree.getCurrentMinute();
 
-        /* Convertis la température en entier */
+        /* Convertit la température en entier */
         int temperature = txtTemperature.isEmpty() ? -1 : Integer.parseInt(txtTemperature);
 
         /*
-         * Si le mode edition est activée, edite la cuisson, sinon crée une
+         * Si le mode édition est activé, édite la cuisson, sinon crée une
          * nouvelle cuisson
          */
         if (activity.modeEdition)
@@ -160,7 +160,7 @@ public class AjouterFragment extends Fragment {
     }
 
     /**
-     * Edite une cuisson
+     * Édite une cuisson
      *
      * @param plat        Nouveau nom du plat
      * @param heure       La nouvelle durée en heure de la cuisson
@@ -174,7 +174,8 @@ public class AjouterFragment extends Fragment {
 
             activity.changeFragment(0);
         } catch (IllegalArgumentException e) {
-            /* Crée un boite de dialogue qui informe que les valeurs sont incorrectes */
+            /* Crée une boite de dialogue qui informe que les valeurs sont
+            incorrectes */
             new AlertDialog
                     .Builder(getContext())
                     .setTitle(R.string.alert_title_error)
@@ -188,7 +189,7 @@ public class AjouterFragment extends Fragment {
     /**
      * Methode qui tente de créer une nouvelle Cuisson si elle est valide
      *
-     * Si la cuisson est valide mais qu'elle existe deja, on demande si l'on
+     * Si la cuisson est valide mais qu'elle existe déjà, on demande si l'on
      * veut l'éditer et change la valeur suivant le choix de l'utilisateur
      *
      * @param plat Le nouveau nom du plat
@@ -200,7 +201,7 @@ public class AjouterFragment extends Fragment {
         try {
             Cuisson cuisson = new Cuisson(plat, heure, minutes, temperature);
 
-            /* On ajoute la cuisson a la liste des cuisson */
+            /* On ajoute la cuisson à la liste des cuissons */
             activity.addCuisson(cuisson);
 
             /* Remet les champs vides */
@@ -225,7 +226,7 @@ public class AjouterFragment extends Fragment {
         } catch (CuissonDejaExistanteException e) {
 
             /*
-             * La cuisson existe deja, on propose d'éditer le plat qui fait
+             * La cuisson existe déjà, on propose d'éditer le plat qui fait
              * doublon
              */
             new AlertDialog
@@ -258,7 +259,7 @@ public class AjouterFragment extends Fragment {
         /* Recherche l'indice de l'élément qui fait doublon */
         for (int j = 0; j < listeCuisson.size(); j++) {
 
-            /* Et modifie sa valeur avant d'arreter la fonction */
+            /* Et modifie sa valeur avant d'arrêter la fonction */
             if (listeCuisson.get(j).getPlat().equals(plat)) {
                 listeCuisson.get(j).editCuisson(plat,
                         heure, minutes, temperature);
@@ -269,7 +270,7 @@ public class AjouterFragment extends Fragment {
     }
 
     /**
-     * Action lors du clic sur le boutton Effacer
+     * Action lors du clic sur le bouton Effacer
      *
      *
      * @param view non utilisé
@@ -280,12 +281,12 @@ public class AjouterFragment extends Fragment {
     }
 
     /**
-     * Remet la valeurs des champs par défaut
+     * Remet les valeurs des champs par défaut
      */
     private void champsDefaut() {
         inputPlat.setText("");
-        inputDuree.setHour(0);
-        inputDuree.setMinute(40);
+        inputDuree.setCurrentHour(0);
+        inputDuree.setCurrentMinute(40);
         inputTemperature.setText("");
     }
 }

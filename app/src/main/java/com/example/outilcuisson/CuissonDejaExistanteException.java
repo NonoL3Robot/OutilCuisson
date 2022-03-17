@@ -7,8 +7,8 @@
 package com.example.outilcuisson;
 
 /**
- * Exception levé lorsque l'utilisateur décide de créer une nouvelle cuisson
- * qui à le même nom que l'une des cuissons déja crée dans l'application
+ * Exception levée lorsque l'utilisateur décide de créer une nouvelle cuisson
+ * qui a le même nom que l'une des cuissons déjà créée dans l'application
  *
  * @author THIZY Alexandre
  * @author VABRE Lucàs

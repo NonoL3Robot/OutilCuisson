@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Espacement -->
     <dimen name="categories_margin">5dp</dimen>
     <dimen name="title_margin_bottom">10dp</dimen>
-    <dimen name="cuissons_padding">5dp</dimen>
+    <dimen name="cuissons_padding">20dp</dimen>
 
     <!-- Polices -->
-    <dimen name="titre_police">20sp</dimen>
-    <dimen name="categories_police">16sp</dimen>
-    <dimen name="cuissons_police">16sp</dimen>
+    <dimen name="titre_police">35sp</dimen>
+    <dimen name="categories_police">24sp</dimen>
+    <dimen name="cuissons_police">24sp</dimen>
 </resources>

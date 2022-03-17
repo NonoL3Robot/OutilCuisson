@@ -68,7 +68,7 @@ public class AfficherFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.afficher_fragment, container,false);
 
-        /* Elements intéractifs */
+        /* Éléments intéractifs */
         listView = view.findViewById(R.id.listeCuisson);
         adapterCuissons = new ArrayAdapter<>(getActivity(),
                 R.layout.ligne_liste, R.id.item_cuisson, new ArrayList<>());
@@ -88,8 +88,8 @@ public class AfficherFragment extends Fragment {
     }
 
     /**
-     * Met a jour la liste visuelle des cuissons par rapport au cuissons
-     * enregistré dans le MainActivity
+     * Met à jour la liste visuelle des cuissons par rapport aux cuissons
+     * enregistrées dans la MainActivity
      */
     public void afficherCuisson() {
         adapterCuissons.clear();
@@ -121,7 +121,7 @@ public class AfficherFragment extends Fragment {
     }
 
     /**
-     * Réalise l'action souhaité en fonction de l'item du menu selectionné
+     * Réalise l'action souhaitée en fonction de l'item du menu selectionné
      */
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -149,10 +149,10 @@ public class AfficherFragment extends Fragment {
      * Crée une fenêtre qui montre les informations de la cuisson sélectionnée
      * avec notamment la valeur du thermostat
      *
-     * @param index indice de la cuisson sélectionné dans la liste des cuissons
+     * @param index indice de la cuisson sélectionnée dans la liste des cuissons
      */
     public void afficherThermos(int index) {
-        /* Recupère l'objet cuisson */
+        /* Récupère l'objet cuisson */
         Cuisson cuisson = activity.getListeCuisson().get(index);
 
         String content = getString(R.string.alert_content_thermos,
@@ -170,7 +170,7 @@ public class AfficherFragment extends Fragment {
     /**
      * Supprime l'objet correspondant cuisson
      *
-     * @param index indice de la cuissons sélectionnée dans la liste des
+     * @param index indice de la cuisson sélectionnée dans la liste des
      *              cuissons
      */
     public void supprimerCuisson(int index) {

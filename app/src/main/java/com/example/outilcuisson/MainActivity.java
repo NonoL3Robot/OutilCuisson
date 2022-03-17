@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
+ * Activité principale de l'application
+ *
  * @author THIZY Alexandre
  * @author VABRE Lucàs
  * @author VILLENEUVE Noé
@@ -51,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 gestionnairePagination;
 
     /**
-     * Défini si l'utilisateur est entrain de éditer une cuisson
+     * Définit si l'utilisateur est en train d'éditer une cuisson
      */
     public boolean modeEdition = false;
 
     /**
-     * La cuisson que l'utilisateur est entrain de éditer
+     * La cuisson que l'utilisateur est en train d'éditer
      */
     public Cuisson cuissonAEditer;
 
@@ -94,17 +96,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Ajoute une cuisson a la liste des cuissons
+     * Ajoute une cuisson dans la liste des cuissons
      *
-     * @param cuisson Objet cuisson a ajouter dans la liste
+     * @param cuisson Objet cuisson à ajouter dans la liste
      */
     public void addCuisson(Cuisson cuisson) throws CuissonDejaExistanteException {
         if (estDansCuisson(cuisson)) throw new CuissonDejaExistanteException();
 
         listeCuisson.add(cuisson);
-
-        /* Test affichage du contennu de la liste des cuisson */
-        System.out.println(Arrays.asList(listeCuisson));
     }
 
     /**
@@ -115,10 +114,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Vérifie si la cuisson passée en paramètre est déja dans la liste des
+     * Vérifie si la cuisson passée en paramètre est déjà dans la liste des
      * cuisson
      *
-     * @param aTester La Cuisson a tester
+     * @param aTester La Cuisson à tester
      * @return true si la cuisson est présente dans la liste, false sinon
      */
     private boolean estDansCuisson(Cuisson aTester) {
@@ -129,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Lance l'edition d'une cuisson en redirigeant l'utilisateur vers le
-     * fragment d'édition, défini le que l'utilisateur est en mode édition et
-     * référence la cuisson a éditer dans la classe activity
+     * Lance l'édition d'une cuisson en redirigeant l'utilisateur vers le
+     * fragment d'édition, définit que l'utilisateur est en mode édition et
+     * référence la cuisson à éditer dans la classe activity
      *
      * @param index L'indice de la cuisson à éditer dans la liste des cuissons
      */
@@ -142,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Charge le fichier de sauvegarde et attribue les cuissons sauvegardée
+     * Charge le fichier de sauvegarde et attribue les cuissons sauvegardées
      * dans la liste des cuissons
      */
     private void chargerFichier() {
@@ -162,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Suvegarde les liste des cuissons dans le fichier de sauvegarde
+     * Suvegarde la liste des cuissons dans le fichier de sauvegarde
      */
     private void sauvegarderFichier() {
         try {
@@ -189,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    /* Réalise l'action souhaité en fonction de l'item du menu selectionné */
+    /* Réalise l'action souhaitée en fonction de l'item du menu selectionné */
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -232,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Change le fragment courrant
+     * Change le fragment courant
      *
      * @param pos indice du fragment dans le ViewPager2
      */

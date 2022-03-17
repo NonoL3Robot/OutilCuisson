@@ -9,8 +9,8 @@ package com.example.outilcuisson;
 import java.io.Serializable;
 
 /**
- * Classe qui défini une cuisson
- * Elements serealizable qui permettra d'être sauvegardé et chargé depuis un
+ * Classe qui définit une cuisson
+ * Éléments serializable qui permettra d'être sauvegardé et chargé depuis un
  * fichier
  *
  * @author THIZY Alexandre
@@ -21,8 +21,7 @@ public class Cuisson implements Serializable {
 
     /**
      * Valeur de la chaîne qui représente une cuisson si l'une des
-     * caractéristiques
-     * de la cuisson est invalide
+     * caractéristiques de la cuisson est invalide
      */
     private static final String CHAINE_DEFAUT = "Information incohérente";
 
@@ -50,18 +49,26 @@ public class Cuisson implements Serializable {
      * La durée en heure de la cuisson du plat
      */
     private int heure;
+
+    /**
+     * La durée en minute de la cuisson du plat
+     */
     private int minute;
+
+    /**
+     * La température en degrés de la cuisson du plat
+     */
     private int degree;
 
     /**
      * Crée une nouvelle cuisson
      *
-     * @param plat La nom du plat
+     * @param plat Le nom du plat
      * @param heure La durée en heure
      * @param minute La durée en minutes
-     * @param degree La température en degrée
+     * @param degree La température en degrés
      * @throws IllegalArgumentException Si les valeurs passées en arguments
-     * ne sont pas corrects
+     * ne sont pas correctes
      */
     public Cuisson(String plat, int heure, int minute, int degree) {
         if (!platValide(plat)
@@ -78,10 +85,9 @@ public class Cuisson implements Serializable {
 
     /**
      * Détermine si un nom de plat est valide (non vide, au plus 20
-     * caractères et ne
-     * contient pas le caractère '|')
+     * caractères et ne contient pas le caractère '|')
      *
-     * @param nomPlat chaîne à testesr
+     * @param nomPlat chaîne à tester
      * @return un booléen égal à vrai ssi la chaîne à tester est valide
      */
     public static boolean platValide(String nomPlat) {
@@ -90,12 +96,12 @@ public class Cuisson implements Serializable {
     }
 
     /**
-     * Prédicat qui défini si un horaire est valide
+     * Prédicat qui définit si un horaire est valide
      * Les heures et les minutes doivent être valides et ne doivent pas être
      * nulles
      *
-     * @param heure La durée en heure a tester
-     * @param minute La durée en minutes a tester
+     * @param heure La durée en heure à tester
+     * @param minute La durée en minutes à tester
      * @return true si le prédicat est vérifié, false sinon
      */
     public static boolean horaireValide(int heure, int minute) {
@@ -167,11 +173,11 @@ public class Cuisson implements Serializable {
     }
 
     /**
-     * Edite la totalité des champs de la cuisson
+     * Édite la totalité des champs de la cuisson
      *
      * @param plat Le nouveau nom du plat
      * @param heure La nouvelle durée en heure de la cuisson
-     * @param minute La nouvelle durée  en minutes de la cuisson
+     * @param minute La nouvelle durée en minutes de la cuisson
      * @param degree Le nouvelle température de la cuisson
      * @throws IllegalArgumentException Si les paramètres sont incorrects
      */
@@ -201,7 +207,7 @@ public class Cuisson implements Serializable {
     }
 
     /**
-     * Renvoie le thermostat correspondant à la temperature argument
+     * Renvoie le thermostat correspondant à la température argument
      * (celle-ci doit être inférieure à TEMPERATURE_MAX)
      *
      * @return l'entier égal au thermostat ou -1 si la température est invalide
@@ -225,8 +231,7 @@ public class Cuisson implements Serializable {
      * @return une chaîne constituée du caractère espace
      */
     private static String chaineEspace(int nbEspace) {
-        StringBuilder aRenvoyer = new StringBuilder();
-        for (int i = 1; i <= nbEspace; i++) aRenvoyer.append(" ");
-        return aRenvoyer.toString();
+        final char ESPACE = ' ';
+        return new String(new char[nbEspace]).replace('\0', ESPACE);
     }
 }
